@@ -8,7 +8,7 @@
     <title>Advanced PnPContext use | PnP Core SDK </title>
     <meta name="viewport" content="width=device-width">
     <meta name="title" content="Advanced PnPContext use | PnP Core SDK ">
-    <meta name="generator" content="docfx 2.56.5.0">
+    <meta name="generator" content="docfx 2.59.2.0">
     <meta name="description" content="The PnP Core SDK is a modern .NET SDK designed to work for Microsoft 365. It provides a unified object model for working with SharePoint Online and Teams which is agnostic to the underlying API's being called.">
     <link rel="shortcut icon" href="https://c.s-microsoft.com/favicon.ico?v2">
     <link rel="stylesheet" href="../styles/docfx.vendor.css">
@@ -78,11 +78,47 @@
           <div class="col-md-10">
             <article class="content wrap" id="_content" data-uid="">
                   <div class="contribution-panel mobile-hide pull-right">
-                      <a href="https://github.com/pnp/pnpcore/blob/dev/docs/using-the-sdk/basics-context.md/#L1" title="Improve this Doc" class="improve-doc-lg"><i class="glyphicon glyphicon-pencil"></i></a>
+                      <a href="https://github.com/gautamdsheth/pnpcore/blob/dev/docs/using-the-sdk/basics-context.md/#L1" title="Improve this Doc" class="improve-doc-lg"><i class="glyphicon glyphicon-pencil"></i></a>
                   </div>
                     <h1 id="advanced-pnpcontext-use">Advanced PnPContext use</h1>
 
 <p>Requesting a <code>PnPContext</code> is something each application does, using the <code>PnPContextFactory</code> as explained in the <a href="readme.html">overview article</a>. Whereas the overview article describes how to get a <code>PnPContext</code> there are additional possibilities when requesting and working with a <code>PnPContext</code>.</p>
+<h2 id="adding-custom-context-to-a-pnpcontext">Adding custom context to a PnPContext</h2>
+<p>The <code>PnPContext</code> is at the center of PnP Core SDK and sometimes you might want to add additional context to this object. This can be done by adding your custom context as key value pairs in the <code>PnPContext</code> <code>Properties</code> collection. When a context is cloned (see later chapters on this page), then the added properties are also copied over to the cloned context.</p>
+<pre><code class="lang-csharp">// Option A: Add some properties after the context was created
+context.Properties.Add(&quot;MyProperty&quot;, &quot;PnP Rocks!&quot;);
+
+// Option B: Add properties during PnPContext creation. If you need the 
+// property as part of throttling event handling then this is the recommended
+// pattern to follow
+
+using (var context = await pnpContextFactory.CreateAsync(&quot;SiteToWorkWith&quot;, 
+                                                        new PnPContextOptions()
+                                                        {
+                                                            Properties = new Dictionary&lt;string, object&gt;
+                                                                        {
+                                                                            { &quot;MyProperty&quot;, &quot;PnP Rocks!&quot; }
+                                                                        }
+                                                        })
+    )
+{
+    // Use the context
+}
+
+</code></pre>
+<h2 id="optimzing-performance-when-you-know-the-exact-case-of-the-site-to-work-with">Optimzing performance when you know the exact case of the site to work with</h2>
+<p>PnP Core SDK does use a lot of SharePoint batching and that requires that the SharePoint site URIs are used with correct casing inside the batch request. To ensure we know the correct case during <code>PnPContext</code> initialization we do two requests to initialize the context, first one is interactive (that works with invalid casing) and then pick up the correct case from that response, followed by loading the remaining initialization data. If you know the site URI casing you can all the initialization requests in a single roundtrip, to do so specify <code>PnPContextOptions</code> with the <code>SiteUriCasingIsCorrect</code> set to <code>true</code>.</p>
+<pre><code class="lang-csharp">using (var context = await pnpContextFactory.CreateAsync(&quot;SiteToWorkWith&quot;, 
+                                                        new PnPContextOptions()
+                                                        {
+                                                            SiteUriCasingIsCorrect = true
+                                                        })
+    )
+{
+    // Use the context
+}
+
+</code></pre>
 <h2 id="loading-additional-iweb-and-isite-properties-when-creating-a-pnpcontext">Loading additional IWeb and ISite properties when creating a PnPContext</h2>
 <p>When a <code>PnPContext</code> is created two calls are issued to SharePoint Online. In a first call the <code>IWeb</code> is loaded with following properties: <code>Id</code>, <code>Url</code> and <code>RegionalSettings</code>. In the second call <code>ISite</code> is loaded with the <code>Id</code> and <code>GroupId</code> properties. If your application needs additional <code>IWeb</code> or <code>ISite</code> properties you can optimize the number of server roundtrips by adding the extra needed properties to the already planned requests for loading <code>IWeb</code> and <code>ISite</code>. To do this you can provide a <code>PnPContextOptions</code> object specifying the additional <code>IWeb</code> and <code>ISite</code> properties to load.</p>
 <pre><code class="lang-csharp">var options = new PnPContextOptions()
@@ -194,5 +230,7 @@ using (var context = await pnpContextFactory.CreateAsync(&quot;SiteToWorkWith&qu
     
     <script type="text/javascript" src="../styles/docfx.vendor.js"></script>
     <script type="text/javascript" src="../styles/docfx.js"></script>
-    <script type="text/javascript" src="../styles/main.js"></script>  </body>
+    <script type="text/javascript" src="../styles/main.js"></script>    
+    <img src="https://m365-visitor-stats.azurewebsites.net/pnpcoresdk/docs">
+  </body>
 </html>

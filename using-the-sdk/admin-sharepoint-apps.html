@@ -8,7 +8,7 @@
     <title>Apps | PnP Core SDK </title>
     <meta name="viewport" content="width=device-width">
     <meta name="title" content="Apps | PnP Core SDK ">
-    <meta name="generator" content="docfx 2.56.5.0">
+    <meta name="generator" content="docfx 2.59.2.0">
     <meta name="description" content="The PnP Core SDK is a modern .NET SDK designed to work for Microsoft 365. It provides a unified object model for working with SharePoint Online and Teams which is agnostic to the underlying API's being called.">
     <link rel="shortcut icon" href="https://c.s-microsoft.com/favicon.ico?v2">
     <link rel="stylesheet" href="../styles/docfx.vendor.css">
@@ -78,7 +78,7 @@
           <div class="col-md-10">
             <article class="content wrap" id="_content" data-uid="">
                   <div class="contribution-panel mobile-hide pull-right">
-                      <a href="https://github.com/pnp/pnpcore/blob/dev/docs/using-the-sdk/admin-sharepoint-apps.md/#L1" title="Improve this Doc" class="improve-doc-lg"><i class="glyphicon glyphicon-pencil"></i></a>
+                      <a href="https://github.com/gautamdsheth/pnpcore/blob/dev/docs/using-the-sdk/admin-sharepoint-apps.md/#L1" title="Improve this Doc" class="improve-doc-lg"><i class="glyphicon glyphicon-pencil"></i></a>
                   </div>
                     <h1 id="apps">Apps</h1>
 
@@ -163,6 +163,36 @@ await app.InstallAsync();
 <h5>Important</h5>
 <p>Install operation is context-specific. It means that you should use the <code>PnPContext</code> instance from the corresponding site to install the app to that site.</p>
 </div>
+<h3 id="approve-permissions">Approve Permissions</h3>
+<p>Some apps can request permissions to call additional APIs by adding a <code>webApiPermissionRequests</code> element in their <code>package-solution.json</code> file. Below snippet shows a part of such a file:</p>
+<pre><code class="lang-json">{
+    &quot;solution&quot;: {
+    &quot;name&quot;: &quot;apicalltest-client-side-solution&quot;,
+    &quot;id&quot;: &quot;da4e941c-a64e-401a-b63d-664e5bf62bdc&quot;,
+    &quot;version&quot;: &quot;1.0.0.0&quot;,
+    &quot;includeClientSideAssets&quot;: true,
+    &quot;skipFeatureDeployment&quot;: true,
+    &quot;isDomainIsolated&quot;: false,
+    &quot;webApiPermissionRequests&quot;: [
+      {
+        &quot;resource&quot;: &quot;Microsoft Graph&quot;,
+        &quot;scope&quot;: &quot;Calendars.Read&quot;
+      },
+      {
+        &quot;resource&quot;: &quot;Microsoft Graph&quot;,
+        &quot;scope&quot;: &quot;User.ReadBasic.All&quot;
+      }
+    ]
+}
+</code></pre>
+<p>Permissions requested this way can be approved by using the <code>ApprovePermissionRequests</code> method.</p>
+<pre><code class="lang-csharp">var app = await appManager.AddAsync(packagePath, true);
+var result = await appManager.DeployAsync(app.Id, false);
+
+// approve permissions requested from the app
+IPermissionGrant2[] approvedPermissionGrants = app.ApprovePermissionRequests();
+</code></pre>
+<p>The result is an array of <code>IPermissionGrant2</code> containing the effective permissions including those previously granted for other apps on this resource.</p>
 <h3 id="upgrade-an-app">Upgrade an app</h3>
 <p>To upgrade the app on the specific site you need to call the <code>Upgrade</code> method:</p>
 <pre><code class="lang-csharp">// upgrades the app on the site
@@ -178,7 +208,7 @@ await app.UpgradeAsync();
 <h3 id="uninstall-an-app">Uninstall an app</h3>
 <p>To uninstall the app from the specific site you need to call the <code>Uninstall</code> method:</p>
 <pre><code class="lang-csharp">// uninstalls the app from the site
-await appManager.uninstallAsync(app.Id);
+await appManager.UninstallAsync(app.Id);
 
 // or use app instance
 await app.UninstallAsync();
@@ -203,6 +233,65 @@ await appManager.RemoveAsync(app.Id);
 // or use app instance
 await app.RemoveAsync();
 </code></pre>
+<h2 id="list-add-revoke-or-delete-the-permission-grants">List, add, revoke or delete the permission grants</h2>
+<p>Some apps can request permissions to call additional APIs by adding a <code>webApiPermissionRequests</code> element in their <code>package-solution.json</code> file. Below snippet shows a part of such a file:</p>
+<pre><code class="lang-json">{
+    &quot;solution&quot;: {
+    &quot;name&quot;: &quot;apicalltest-client-side-solution&quot;,
+    &quot;id&quot;: &quot;da4e941c-a64e-401a-b63d-664e5bf62bdc&quot;,
+    &quot;version&quot;: &quot;1.0.0.0&quot;,
+    &quot;includeClientSideAssets&quot;: true,
+    &quot;skipFeatureDeployment&quot;: true,
+    &quot;isDomainIsolated&quot;: false,
+    &quot;webApiPermissionRequests&quot;: [
+      {
+        &quot;resource&quot;: &quot;Microsoft Graph&quot;,
+        &quot;scope&quot;: &quot;Calendars.Read&quot;
+      },
+      {
+        &quot;resource&quot;: &quot;Microsoft Graph&quot;,
+        &quot;scope&quot;: &quot;User.ReadBasic.All&quot;
+      }
+    ]
+}
+</code></pre>
+<p>After adding and deploying an app to the app catalog these API permissions need to be approved by an admin (e.g. via <a href="https://contoso-admin.sharepoint.com/_layouts/15/online/AdminHome.aspx#/webApiPermissionManagement">https://contoso-admin.sharepoint.com/_layouts/15/online/AdminHome.aspx#/webApiPermissionManagement</a>) or via code. The code approach can be implemented using the <code>IApp</code> class and the <code>ApprovePermissionRequests</code> method (see <a href="admin-sharepoint-apps.html#approve-permissions">Approve Permissions</a>).</p>
+<p>Additional API permissions are granted on the <code>ServicePrincipal</code> object. These permission grants can be listed, added, revoked, and deleted using these methods:</p>
+<pre><code class="lang-csharp">// instantiate the TenantAppManager
+var appManager = context.GetTenantAppManager();
+
+// list permissions granted to ServicePrincipal
+IPermissionGrant2[] grants = appManager.ServisePrincipal.ListGrants2();
+
+// add a grant, e.g. scope &quot;Calendars.ReadWrite.Shared&quot; for &quot;Microsoft Graph&quot;
+IPermissionGrant2 addedGrant 
+    = appManager.ServisePrincipal.AddGrant2(&quot;Microsoft Graph&quot;, &quot;Calendars.ReadWrite.Shared&quot;);
+
+// revoke the scope &quot;Calendars.ReadWrite.Shared&quot; for &quot;Microsoft Graph&quot; from 'addedGrant'
+IPermissionGrant2 revokedGrant 
+    = appManager.ServisePrincipal.RevokeGrant2(addedGrant.Id, &quot;Calendars.ReadWrite.Shared&quot;);
+
+// delete all permissions for 'addedGrant', all of &quot;Microsoft Graph&quot; in this example
+appManager.ServisePrincipal.DeleteGrant2(addedGrant.Id);
+</code></pre>
+<div class="IMPORTANT">
+<h5>Important</h5>
+<p>Please not that the previous implemenations of the <code>GetPermissionRequests</code>, <code>ApprovePermissionRequest</code>, <code>DenyPermissionRequest</code>, <code>RevokeGrant</code>,  and <code>ListGrants</code> operations were based on the SharePoint Client Side Object Model (CSOM). These operations are considered for internal use only. Therefore these operations are now marked obsolete and will be removed in the next major release.</p>
+</div>
+<h2 id="enable-or-disable-the-sharepoint-app-service-principal">Enable or disable the SharePoint app service principal</h2>
+<p>The SharePoint app service principal can be enabled or disabled using the Azure Active Directory portal or via code. The <code>Enable2</code> and <code>Disable2</code> operations can be found on the <code>ServicePrincipal</code> object:</p>
+<pre><code class="lang-csharp">// Enable the ServicePrincipal
+var appManager = context.GetTenantAppManager();
+IServicePrincipalProperties result = await appManager.ServicePrincipal.Enable2();
+
+// Disable the ServicePrincipal
+var appManager = context.GetTenantAppManager();
+IServicePrincipalProperties result = await appManager.ServicePrincipal.Disable2();
+</code></pre>
+<div class="IMPORTANT">
+<h5>Important</h5>
+<p>Please not that the previous implemenations of the <code>Enable</code> and <code>Disable</code> operations were based on the SharePoint Client Side Object Model (CSOM). These oprations are considered for internal use only. Therefore these operations are now marked obsolete and will be removed in the next major release.</p>
+</div>
 <h2 id="tenant-app-catalog-specific-operations">Tenant app catalog specific operations</h2>
 <p>Some methods are available only for the tenant app catalog. They are listed below.</p>
 <h3 id="getting-the-url-for-the-tenant-app-catalog-site">Getting the url for the tenant app catalog site</h3>
@@ -223,6 +312,22 @@ else
 }
 </code></pre>
 <p>Note that you have to use the <code>GetTenantAppCatalogUri</code> to get the actual app catalog site url, even when there was no app catalog site and it was created by calling <code>EnsureTenantAppCatalog</code> it's still recommended to get the actual url.</p>
+<h3 id="list-all-site-collection-app-catalogs">List all site collection app catalogs</h3>
+<p>Using the <code>GetSiteCollectionAppCatalogs</code> you can get all site collection app catalogs from the whole tenant:</p>
+<pre><code class="lang-csharp">var tenantAppManager = context.GetTenantAppManager();
+var siteAppCatalogList = await tenantAppManager.GetSiteCollectionAppCatalogsAsync();
+</code></pre>
+<p>The result includes site collection app catalog metadata like absolute url and unique id.</p>
+<h3 id="ensuring-theres-a-site-collection-app-catalog">Ensuring there's a site collection app catalog</h3>
+<p>To ensure a site collection app catalog does exist you can use the <code>EnsureSiteCollectionAppCatalog</code> methods, they check if there's an app catalog and if not one is created by calling the <code>AddSiteCollectionAppCatalog</code> methods.</p>
+<pre><code class="lang-csharp">var tenantAppManager = context.GetTenantAppManager();
+await tenantAppManager.EnsureSiteCollectionAppCatalogAsync(&quot;https://contoso.sharepoint.com/sites/sitethatneedsacatalog&quot;);
+</code></pre>
+<h3 id="removing-a-site-collection-app-catalog">Removing a site collection app catalog</h3>
+<p>If the app catalog of a site is not needed anymore then it can be removed using the <code>RemoveSiteCollectionAppCatalog</code> methods:</p>
+<pre><code class="lang-csharp">var tenantAppManager = context.GetTenantAppManager();
+await tenantAppManager.RemoveSiteCollectionAppCatalogAsync(&quot;https://contoso.sharepoint.com/sites/sitethatneedsacatalog&quot;);
+</code></pre>
 <h3 id="check-whether-the-solution-contains-ms-teams-component">Check whether the solution contains MS Teams component</h3>
 <p>SharePoint Framework solutions might extend MS Teams as well. You can check, whether a particular SPFx app extends MS Teams or not:</p>
 <pre><code class="lang-csharp">// get tenant app manager 
@@ -235,12 +340,6 @@ var app = await tenantAppManager.GetAvailableAsync(&quot;My App Title&quot;);
 var containsTeams = await tenantAppManager.SolutionContainsTeamsComponentAsync(app.Id);
 </code></pre>
 <p>For example, If your SPFx solution lists any webpart with <code>TeamsPersonalApp</code> or <code>TeamsTab</code> as supported hosts, the method above will return <em>true</em>.</p>
-<h3 id="list-all-site-collection-app-catalogs">List all site collection app catalogs</h3>
-<p>Using the <code>GetSiteCollectionAppCatalogs</code> you can get all site collection app catalogs from the whole tenant:</p>
-<pre><code class="lang-csharp">var tenantAppManager = context.GetTenantAppManager();
-var siteAppCatalogList = await tenantAppManager.GetSiteCollectionAppCatalogsAsync();
-</code></pre>
-<p>The result includes site collection app catalog metadata like absolute url and unique id.</p>
 <h3 id="get-all-apps-acquired-from-sharepoint-store">Get all apps, acquired from SharePoint Store</h3>
 <p>Your tenant app catalog hosts not only custom apps, but also apps installed from the SharePoint store. To easily get all third-party apps from the SharePoint Store, use the method below:</p>
 <pre><code class="lang-csharp">var tenantAppManager = context.GetTenantAppManager();
@@ -299,5 +398,7 @@ using (var outputFileStream = new FileStream(&quot;teams app.zip&quot;, FileMode
     
     <script type="text/javascript" src="../styles/docfx.vendor.js"></script>
     <script type="text/javascript" src="../styles/docfx.js"></script>
-    <script type="text/javascript" src="../styles/main.js"></script>  </body>
+    <script type="text/javascript" src="../styles/main.js"></script>    
+    <img src="https://m365-visitor-stats.azurewebsites.net/pnpcoresdk/docs">
+  </body>
 </html>

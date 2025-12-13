@@ -8,7 +8,7 @@
     <title>Working with folders | PnP Core SDK </title>
     <meta name="viewport" content="width=device-width">
     <meta name="title" content="Working with folders | PnP Core SDK ">
-    <meta name="generator" content="docfx 2.56.5.0">
+    <meta name="generator" content="docfx 2.59.2.0">
     <meta name="description" content="The PnP Core SDK is a modern .NET SDK designed to work for Microsoft 365. It provides a unified object model for working with SharePoint Online and Teams which is agnostic to the underlying API's being called.">
     <link rel="shortcut icon" href="https://c.s-microsoft.com/favicon.ico?v2">
     <link rel="stylesheet" href="../styles/docfx.vendor.css">
@@ -78,7 +78,7 @@
           <div class="col-md-10">
             <article class="content wrap" id="_content" data-uid="">
                   <div class="contribution-panel mobile-hide pull-right">
-                      <a href="https://github.com/pnp/pnpcore/blob/dev/docs/using-the-sdk/folders-intro.md/#L1" title="Improve this Doc" class="improve-doc-lg"><i class="glyphicon glyphicon-pencil"></i></a>
+                      <a href="https://github.com/gautamdsheth/pnpcore/blob/dev/docs/using-the-sdk/folders-intro.md/#L1" title="Improve this Doc" class="improve-doc-lg"><i class="glyphicon glyphicon-pencil"></i></a>
                   </div>
                     <h1 id="working-with-folders">Working with folders</h1>
 
@@ -122,7 +122,7 @@ foreach(var property in folder.Properties)
 }
 
 // Add a new property
-folder[&quot;myPropertyKey&quot;] = &quot;Some value&quot;;
+folder.Properties[&quot;myPropertyKey&quot;] = &quot;Some value&quot;;
 await folder.Properties.UpdateAsync();
 </code></pre>
 <h2 id="adding-folders">Adding folders</h2>
@@ -156,6 +156,19 @@ await context.Web.EnsurePropertiesAsync(p =&gt; p.RootFolder);
 context.Web.RootFolder.WelcomePage = &quot;sitepages/myhomepage.aspx&quot;;
 await context.Web.RootFolder.UpdateAsync();
 </code></pre>
+<h2 id="renaming-folders">Renaming folders</h2>
+<p>To rename a folder you can either use the <code>Rename</code> methods or use the <code>MoveTo</code> methods.</p>
+<pre><code class="lang-csharp">string folderUrl = $&quot;{context.Uri.PathAndQuery}/Shared Documents/Test&quot;;
+
+// Get a reference to the folder
+IFolder folder = await context.Web.GetFolderByServerRelativeUrlAsync(folderUrl);
+
+// Option A: Use the Rename methods
+await testFolder.RenameAsync(&quot;Test2&quot;);
+
+// Option B: Move the folder to rename it
+await testFolder.MoveToAsync($&quot;{context.Uri.PathAndQuery}/Shared Documents/Test2&quot;);
+</code></pre>
 <h2 id="deleting-folders">Deleting folders</h2>
 <pre><code class="lang-csharp">// Get the root folder of the Site Pages library
 IFolder folder = (await context.Web.Lists.GetByTitleAsync(&quot;Site Pages&quot;, p =&gt; p.RootFolder)).RootFolder;
@@ -166,8 +179,34 @@ var subFolder = await folder.Folders.AddAsync(&quot;My folder&quot;);
 // Delete the folder again
 await subFolder.DeleteAsync();
 </code></pre>
+<h2 id="sharing-folders">Sharing folders</h2>
+<p>A folder can be shared with your organization, with specific users or with everyone (anonymous), obviously all depending on how the sharing configuration of your tenant and site collection. Check out the <a href="sharing-intro.html">PnP Core SDK Sharing APIs</a> to learn more on how you can share a folder.</p>
 <h2 id="getting-changes-for-a-folder">Getting changes for a folder</h2>
 <p>You can use the <code>GetChanges</code> methods on an <code>IFolder</code> to list all the changes. See <a href="changes-sharepoint.html">Enumerating changes that happened in SharePoint</a> to learn more.</p>
+<h2 id="copying-or-moving-folders">Copying or moving folders</h2>
+<p>A folder can be copied or moved into another SharePoint location and this can be done using the <a href="https://pnp.github.io/pnpcore/api/PnP.Core.Model.SharePoint.IFile.html#PnP_Core_Model_SharePoint_IFile_CopyToAsync_System_String_System_Boolean_PnP_Core_Model_SharePoint_MoveCopyOptions_">CopyToAsync</a> and <a href="https://pnp.github.io/pnpcore/api/PnP.Core.Model.SharePoint.IFile.html#PnP_Core_Model_SharePoint_IFile_MoveToAsync_System_String_PnP_Core_Model_SharePoint_MoveOperations_PnP_Core_Model_SharePoint_MoveCopyOptions_">MoveToAsync</a> methods.</p>
+<pre><code class="lang-csharp">string folderUrl = $&quot;{context.Uri.PathAndQuery}/Shared Documents/customFolder&quot;;
+
+// Get a reference to the folder
+IFolder testFolder = await context.Web.GetFolderByServerRelativeUrlAsync(folderUrl);
+
+// Copy the Folder
+await testFolder.CopyToAsync($&quot;{context.Uri.PathAndQuery}/MyFolder&quot;);
+
+// Move the folder
+await testFolder.MoveToAsync($&quot;{context.Uri.PathAndQuery}/MyFolder&quot;);
+
+// Move the folder with options
+await testFolder.MoveToAsync($&quot;{context.Uri.PathAndQuery}/MyFolder&quot;,
+                            new MoveCopyOptions 
+                            { 
+                                KeepBoth = false
+                            });
+</code></pre>
+<div class="NOTE">
+<h5>Note</h5>
+<p>To copy or move a folder you can use an asynchronous bulk file/folder copy/move via the <code>CreateCopyJobs</code> methods on <code>ISite</code>. See <a href="sites-copymovecontent.html">here</a> for more details.</p>
+</div>
 </article>
           </div>
           <div class="hidden-sm col-md-2" role="complementary">
@@ -194,5 +233,7 @@ await subFolder.DeleteAsync();
     
     <script type="text/javascript" src="../styles/docfx.vendor.js"></script>
     <script type="text/javascript" src="../styles/docfx.js"></script>
-    <script type="text/javascript" src="../styles/main.js"></script>  </body>
+    <script type="text/javascript" src="../styles/main.js"></script>    
+    <img src="https://m365-visitor-stats.azurewebsites.net/pnpcoresdk/docs">
+  </body>
 </html>

@@ -8,7 +8,7 @@
     <title>Multi-threading with PnP Core SDK | PnP Core SDK </title>
     <meta name="viewport" content="width=device-width">
     <meta name="title" content="Multi-threading with PnP Core SDK | PnP Core SDK ">
-    <meta name="generator" content="docfx 2.56.5.0">
+    <meta name="generator" content="docfx 2.59.2.0">
     <meta name="description" content="The PnP Core SDK is a modern .NET SDK designed to work for Microsoft 365. It provides a unified object model for working with SharePoint Online and Teams which is agnostic to the underlying API's being called.">
     <link rel="shortcut icon" href="https://c.s-microsoft.com/favicon.ico?v2">
     <link rel="stylesheet" href="../styles/docfx.vendor.css">
@@ -78,14 +78,14 @@
           <div class="col-md-10">
             <article class="content wrap" id="_content" data-uid="">
                   <div class="contribution-panel mobile-hide pull-right">
-                      <a href="https://github.com/pnp/pnpcore/blob/dev/docs/using-the-sdk/basics-threading.md/#L1" title="Improve this Doc" class="improve-doc-lg"><i class="glyphicon glyphicon-pencil"></i></a>
+                      <a href="https://github.com/gautamdsheth/pnpcore/blob/dev/docs/using-the-sdk/basics-threading.md/#L1" title="Improve this Doc" class="improve-doc-lg"><i class="glyphicon glyphicon-pencil"></i></a>
                   </div>
                     <h1 id="multi-threading-with-pnp-core-sdk">Multi-threading with PnP Core SDK</h1>
 
 <p>The key PnP Core SDK classes like <code>PnPContext</code>, the model classes (e.g. <code>IWeb</code>, <code>ITeamChannel</code>,...) and model collection classes (e.g. <code>IListCollection</code>, <code>ITeamChannelCollection</code>) are <strong>not thread-safe</strong> and therefore it's not recommended to build solutions that have multiple threads sharing these classes. Doing so may lead to unexpected results and exceptions.</p>
 <div class="IMPORTANT">
 <h5>Important</h5>
-<p>While threading is a very attractive option to speed up operations do keep in mind that your application might get throttled sooner as throttling protection kicks in whenever the amount of requests an application makes in a given time window exceeds a certain threshold. The threshold itself is a dynamic one that depends on many factors. See the <a href="https://docs.microsoft.com/en-us/sharepoint/dev/general-development/how-to-avoid-getting-throttled-or-blocked-in-sharepoint-online">Avoid getting throttled or blocked in SharePoint Online</a> article for more details.</p>
+<p>While threading is a very attractive option to speed up operations do keep in mind that your application might get throttled sooner as throttling protection kicks in whenever the amount of requests an application makes in a given time window exceeds a certain threshold. The threshold itself is a dynamic one that depends on many factors. See the <a href="https://docs.microsoft.com/en-us/sharepoint/dev/general-development/how-to-avoid-getting-throttled-or-blocked-in-sharepoint-online">Avoid getting throttled or blocked in SharePoint Online</a> article for more details. Also do know that via the PnP Core SDK <code>EventHub</code> you can get notified when your code is throttled (see <a href="basics-eventhub.html">Using the PnP Core SDK Event hub</a> for more details).</p>
 </div>
 <h2 id="what-options-do-i-have-to-parallelize-operations">What options do I have to parallelize operations?</h2>
 <p>The main thing to do is to <strong>create a <code>PnPContext</code> per thread</strong> by either creating a new one (e.g. if you're running a thread per site/web) or by cloning the current one in case you're parallelizing work inside the same site/web. Below code samples show two implementations of running operations for a given <code>IWeb</code> in parallel:</p>
@@ -184,5 +184,7 @@ await GetUrlsToProcess().AsyncParallelForEach(async url =&gt;
     
     <script type="text/javascript" src="../styles/docfx.vendor.js"></script>
     <script type="text/javascript" src="../styles/docfx.js"></script>
-    <script type="text/javascript" src="../styles/main.js"></script>  </body>
+    <script type="text/javascript" src="../styles/main.js"></script>    
+    <img src="https://m365-visitor-stats.azurewebsites.net/pnpcoresdk/docs">
+  </body>
 </html>

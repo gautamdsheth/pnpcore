@@ -8,7 +8,7 @@
     <title>PnP Core SDK - Blazor Sample | PnP Core SDK </title>
     <meta name="viewport" content="width=device-width">
     <meta name="title" content="PnP Core SDK - Blazor Sample | PnP Core SDK ">
-    <meta name="generator" content="docfx 2.56.5.0">
+    <meta name="generator" content="docfx 2.59.2.0">
     <meta name="description" content="The PnP Core SDK is a modern .NET SDK designed to work for Microsoft 365. It provides a unified object model for working with SharePoint Online and Teams which is agnostic to the underlying API's being called.">
     <link rel="shortcut icon" href="https://c.s-microsoft.com/favicon.ico?v2">
     <link rel="stylesheet" href="../../styles/docfx.vendor.css">
@@ -78,7 +78,7 @@
           <div class="col-md-10">
             <article class="content wrap" id="_content" data-uid="">
                   <div class="contribution-panel mobile-hide pull-right">
-                      <a href="https://github.com/pnp/pnpcore/blob/dev/docs/demos/Demo.Blazor/README.md/#L1" title="Improve this Doc" class="improve-doc-lg"><i class="glyphicon glyphicon-pencil"></i></a>
+                      <a href="https://github.com/gautamdsheth/pnpcore/blob/dev/docs/demos/Demo.Blazor/README.md/#L1" title="Improve this Doc" class="improve-doc-lg"><i class="glyphicon glyphicon-pencil"></i></a>
                   </div>
                     <h1 id="pnp-core-sdk---blazor-sample">PnP Core SDK - Blazor Sample</h1>
 
@@ -95,6 +95,8 @@
 </li>
 <li><p>Enter a name for your new app, make sure <em>Accounts in this organizational directory only</em> is selected. As the Redirect URI, in Web platform enter <strong>https://localhost:44349/authentication/login-callback</strong> (The port may vary according to your Visual Studio)</p>
 </li>
+<li><p>Make sure that the added Redirect URI is for a Single-Page Application</p>
+</li>
 <li><p>Under <strong>Implicit grant</strong> section, check <strong>Access tokens</strong> and <strong>ID tokens</strong></p>
 </li>
 <li><p>Go to <strong>API permissions</strong> section , click <strong>Add a permission</strong>
@@ -110,8 +112,8 @@
 </ul>
 <h2 id="configure-your-application">Configure your application</h2>
 <ul>
-<li>Configure the URL of your SharePoint site as the value of <code>SharePoint:SiteUrl</code> app setting</li>
-<li>in the file <code>wwwroot/appsettings.json</code>, replace the <code>{app_id}</code> and the <code>{tenant_id}</code> accordingly with the values from above</li>
+<li>Replace <code>{sharepoint_url}</code> the URL of your SharePoint site in app setting</li>
+<li>in the file <code>wwwroot/appsettings.json</code>, replace the <code>{client_id}</code> and the <code>{tenant_id}</code> accordingly with the values from above</li>
 </ul>
 <h2 id="execute">Execute</h2>
 <p>Hit F5 in Visual studio to execute the Blazor app.
@@ -143,5 +145,7 @@ When trying to access one of the sections, the applications prompts you for sign
     
     <script type="text/javascript" src="../../styles/docfx.vendor.js"></script>
     <script type="text/javascript" src="../../styles/docfx.js"></script>
-    <script type="text/javascript" src="../../styles/main.js"></script>  </body>
+    <script type="text/javascript" src="../../styles/main.js"></script>    
+    <img src="https://m365-visitor-stats.azurewebsites.net/pnpcoresdk/docs">
+  </body>
 </html>

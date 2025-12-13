@@ -8,7 +8,7 @@
     <title>Working with Teams: Channels | PnP Core SDK </title>
     <meta name="viewport" content="width=device-width">
     <meta name="title" content="Working with Teams: Channels | PnP Core SDK ">
-    <meta name="generator" content="docfx 2.56.5.0">
+    <meta name="generator" content="docfx 2.59.2.0">
     <meta name="description" content="The PnP Core SDK is a modern .NET SDK designed to work for Microsoft 365. It provides a unified object model for working with SharePoint Online and Teams which is agnostic to the underlying API's being called.">
     <link rel="shortcut icon" href="https://c.s-microsoft.com/favicon.ico?v2">
     <link rel="stylesheet" href="../styles/docfx.vendor.css">
@@ -78,7 +78,7 @@
           <div class="col-md-10">
             <article class="content wrap" id="_content" data-uid="">
                   <div class="contribution-panel mobile-hide pull-right">
-                      <a href="https://github.com/pnp/pnpcore/blob/dev/docs/using-the-sdk/teams-channels.md/#L1" title="Improve this Doc" class="improve-doc-lg"><i class="glyphicon glyphicon-pencil"></i></a>
+                      <a href="https://github.com/gautamdsheth/pnpcore/blob/dev/docs/using-the-sdk/teams-channels.md/#L1" title="Improve this Doc" class="improve-doc-lg"><i class="glyphicon glyphicon-pencil"></i></a>
                   </div>
                     <h1 id="working-with-teams-channels">Working with Teams: Channels</h1>
 
@@ -120,11 +120,23 @@ var team = await context.Team.GetAsync(o =&gt; o.PrimaryChannel);
 // Get the primary channel
 var primaryChannel = await team.PrimaryChannel;
 </code></pre>
-<h2 id="creating-channels">Creating Channels</h2>
-<p>To add a new channel, call the Add method, specifying a name and optionally a description.</p>
-<pre><code class="lang-csharp">var team = await context.Team.GetAsync(p =&gt; p.Channels);
+<h2 id="getting-access-to-the-channels-files">Getting access to the Channel's files</h2>
+<p>The files of a Team channel are hosted in the connected SharePoint site. Using the <code>GetFilesFolder</code> methods you can get the <code>IFolder</code> that's hosting the files of this channel and once you've the <code>IFolder</code> you can use all of SharePoint's advanced file capabilities to manage (e.g. enumerate, upload, download, share, publish, recycle, delete,...) the files in this Teams channel.</p>
+<pre><code class="lang-csharp">// Get the Team primary channel
+var team = await context.Team.GetAsync(o =&gt; o.PrimaryChannel);
 
-// Get the Team
+var folder = await team.PrimaryChannel.GetFilesFolderAsync(p =&gt; p.Files);
+
+foreach(var file in folder.Files.AsRequested())
+{
+    // Do something with the file
+}
+</code></pre>
+<h2 id="creating-channels">Creating Channels</h2>
+<p>To add a new channel, call the Add method, specifying a name and optionally a description. When you want to create a private or shared channel use the <code>TeamChannelOptions</code> class as input.</p>
+<pre><code class="lang-csharp">// Get the Team
+var team = await context.Team.GetAsync(p =&gt; p.Channels);
+
 string channelName = $&quot;My Cool New Channel&quot;;
 
 // Check if the channel exists
@@ -133,6 +145,13 @@ if (channelFound == null)
 {
     // Add a new channel
     channelFound = await team.Channels.AddAsync(channelName, &quot;This is my cool new Channel, check this out!&quot;);
+
+    // Add the channel as private
+    channelFound = await team.Channels.AddAsync(channelName, new TeamChannelOptions
+    { 
+        Description = &quot;This is my cool new Channel, check this out!&quot;, 
+        MembershipType = TeamChannelMembershipType.Private
+    });
 }
 </code></pre>
 <div class="TIP">
@@ -154,8 +173,8 @@ string channelName = $&quot;My Cool New Channel&quot;;
 // Get the channel you wish to update
 var channelToUpdate = team.Channels.Where(p =&gt; p.DisplayName == channelName).FirstOrDefault();
 
-if(channelToUpdate != default){
-
+if(channelToUpdate != default
+{
     string newChannelDescription = $&quot;This cool channel is being updated!&quot;;
     channelToUpdate.Description = newChannelDescription;
     
@@ -172,8 +191,8 @@ string channelName = $&quot;My Cool New Channel&quot;;
 // Get the channel you wish to delete
 var channelToDelete = team.Channels.Where(p =&gt; p.DisplayName == channelName).FirstOrDefault();
 
-if(channelToDelete != default){
-    
+if(channelToDelete != default)
+{    
     // Perform the delete operation
     await channelToUpdate.DeleteAsync();
 }
@@ -209,5 +228,7 @@ Additionally, channels are soft-deleted for 30 days, before which counts towards
     
     <script type="text/javascript" src="../styles/docfx.vendor.js"></script>
     <script type="text/javascript" src="../styles/docfx.js"></script>
-    <script type="text/javascript" src="../styles/main.js"></script>  </body>
+    <script type="text/javascript" src="../styles/main.js"></script>    
+    <img src="https://m365-visitor-stats.azurewebsites.net/pnpcoresdk/docs">
+  </body>
 </html>

@@ -8,7 +8,7 @@
     <title>Working with users | PnP Core SDK </title>
     <meta name="viewport" content="width=device-width">
     <meta name="title" content="Working with users | PnP Core SDK ">
-    <meta name="generator" content="docfx 2.56.5.0">
+    <meta name="generator" content="docfx 2.59.2.0">
     <meta name="description" content="The PnP Core SDK is a modern .NET SDK designed to work for Microsoft 365. It provides a unified object model for working with SharePoint Online and Teams which is agnostic to the underlying API's being called.">
     <link rel="shortcut icon" href="https://c.s-microsoft.com/favicon.ico?v2">
     <link rel="stylesheet" href="../styles/docfx.vendor.css">
@@ -78,7 +78,7 @@
           <div class="col-md-10">
             <article class="content wrap" id="_content" data-uid="">
                   <div class="contribution-panel mobile-hide pull-right">
-                      <a href="https://github.com/pnp/pnpcore/blob/dev/docs/using-the-sdk/security-users.md/#L1" title="Improve this Doc" class="improve-doc-lg"><i class="glyphicon glyphicon-pencil"></i></a>
+                      <a href="https://github.com/gautamdsheth/pnpcore/blob/dev/docs/using-the-sdk/security-users.md/#L1" title="Improve this Doc" class="improve-doc-lg"><i class="glyphicon glyphicon-pencil"></i></a>
                   </div>
                     <h1 id="working-with-users">Working with users</h1>
 
@@ -110,6 +110,21 @@
 <td><code>c:0-.f|rolemanager|spo-grid-all-users/&lt;guid&gt;</code></td>
 <td>Use this user to represent all users except the internal users in your organization</td>
 </tr>
+<tr>
+<td>Azure AD security group</td>
+<td><code>c:0t.c|tenant|&lt;guid&gt;</code></td>
+<td>You can add an Azure AD security group to a SharePoint Group or directly grant it a role by using this login name. The <code>&lt;guid&gt;</code> is the Azure AD object id of the security group</td>
+</tr>
+<tr>
+<td>Company Administrator</td>
+<td><code>c:0t.c|tenant|&lt;guid&gt;</code></td>
+<td>Company Administrator translated to a group containing all the tenant level SharePoint administrators. The <code>&lt;guid&gt;</code> is the Azure AD object id of the security group</td>
+</tr>
+<tr>
+<td>Microsoft 365 group</td>
+<td><code>c:0o.c|federateddirectoryclaimprovider|&lt;guid&gt;</code></td>
+<td>You can add a Microsoft 365 group to a SharePoint Group or directly grant it a role by using this login name. The <code>&lt;guid&gt;</code> is the Azure AD object id of the Microsoft 365 group. Note that adding this Microsoft 365 group will grant it's members access</td>
+</tr>
 </tbody>
 </table>
 <p>As you can't simply update the user table list to add users, use the approaches as outlined below.</p>
@@ -129,12 +144,70 @@ foreach(var group in context.Web.SiteUsers.AsRequested())
 <pre><code class="lang-csharp">var foundUser = await context.Web.GetUserByIdAsync(userId);
 </code></pre>
 <h2 id="addingensuring-a-user">Adding/ensuring a user</h2>
-<p>Before a user can be used the user needs to exist and the best way to ensure a user exists is by using the <code>EnsureUser</code> methods.</p>
+<p>Before a user can be used the user needs to exist and the best way to ensure a user exists is by using the <code>EnsureUser</code> and <code>EnsureEveryoneExceptExternalUsers</code> methods. The latter method is needed for the &quot;Everyone except external users&quot; user as that string is different for sites created in other languages. Other &quot;special&quot; users are language neutral.</p>
 <pre><code class="lang-csharp">// Regular user
 var user = await context.Web.EnsureUserAsync(&quot;joe@contoso.onmicrosoft.com&quot;);
 
-// Special user
-var specialUser = await context.Web.EnsureUserAsync(&quot;Everyone except external users&quot;);
+// Special users: for the &quot;Everyone except external users&quot; user use the EnsureEveryoneExceptExternalUsersAsync method
+var everyoneExceptEnternalUsers = await context.Web.EnsureEveryoneExceptExternalUsersAsync();
+
+// Other special users can be done using the string
+var companyAdministators = await context.Web.EnsureUserAsync(&quot;Company Administrator&quot;);
+
+</code></pre>
+<div class="IMPORTANT">
+<h5>Important</h5>
+<p>Using <code>EnsureUser</code> will add the user to the site's users list whenever the user was not there, during that operation the passed in user needs to be a valid user. However, if the user already was added to the site, then deleted from Azure AD, followed by calling <code>EnsureUser</code> this method will not return an error. Calling one of the <code>ValidateAndEnsureUsers</code> method is the best option here, alternatively calling <code>AsGraphUser</code> method will perform an actual validation and throw an error is the user does not exist in Azure AD.</p>
+</div>
+<h3 id="validating-users">Validating users</h3>
+<p>When you've a list of users and you want to validate if these users still exist in Azure AD then use the <code>ValidateUsers</code> methods, if you also want to ensure (see previous chapter) that exist in Azure AD use the <code>ValidateAndEnsureUsers</code> methods.</p>
+<pre><code class="lang-csharp">var userList = new List&lt;string&gt; 
+{ 
+    &quot;ValidUser1@contoso.onmicrosoft.com&quot;, 
+    &quot;ValidUser2@contoso.onmicrosoft.com&quot;, 
+    &quot;NonExistingUser@contoso.onmicrosoft.com&quot; 
+};
+
+// Check users, returns a list containing the NonExistingUser@contoso.onmicrosoft.com user
+var nonExistingUsers = await context.Web.ValidateUsersAsync(userList);
+
+// Checks users and ensures the ones that exist in Azure AD. 
+// Returns a list with 2 ISharePointUser instances for ValidUser1@contoso.onmicrosoft.com
+// and ValidUser2@contoso.onmicrosoft.com
+var existingUserList = await context.Web.ValidateAndEnsureUsersAsync(userList);
+</code></pre>
+<div class="IMPORTANT">
+<h5>Important</h5>
+<p>Disabled users cannot be added as members to a SharePoint site. The  <code>ValidateUsers</code> and <code>ValidateAndEnsureUsers</code> methods verify the 'Enabled' or 'Disabled' status of users in Azure Active Directory (Azure AD), treating disabled users as non-existing. To access the 'enabled' property of a user, the application executing this method must be granted the <code>User.ReadBasic.All</code> API permission.&quot;</p>
+</div>
+<h2 id="granting-permissions-for-a-user-at-web-level">Granting permissions for a user at web level</h2>
+<p>Once a user is added you can directly permission the user by granting it one or more role definitions via one of the <code>AddRoleDefinitions</code> methods. You can also enumerate the roles a user has via the <code>GetRoleDefinitions</code> methods and remove granted roles via the <code>RemoveRoleDefinitions</code> methods. These methods are equivalent to using the methods provided via the <code>ISecurableObject</code> interface on <code>IWeb</code>.</p>
+<pre><code class="lang-csharp">var user = await context.Web.EnsureUserAsync(&quot;joe@contoso.onmicrosoft.com&quot;);
+
+// Grant the user the Full Control role at web level
+await user.AddRoleDefinitionsAsync(&quot;Full Control&quot;);
+
+// Check the roles the user has been granted
+var currentRoleDefinitions = await user.GetRoleDefinitionsAsync();
+
+if (currentRoleDefinitions.AsRequested().FirstOrDefault(p =&gt; p.Name == &quot;Full Control&quot;))
+{
+    // User was granted Full Control
+}
+
+// Remove the Full Control role from the user at web level
+user.RemoveRoleDefinitions(new string[] { &quot;Full Control&quot; });
+</code></pre>
+<h2 id="verifying-the-permissions-of-a-user-at-iweb-ilist-or-ilistitem-level">Verifying the permissions of a user at <code>IWeb</code>, <code>IList</code> or <code>IListItem</code> level</h2>
+<p>If you want to get the permissions of a user granted at <code>IWeb</code>, <code>IList</code> or <code>IListItem</code> level or verify if a user has a certain <code>PermissionKind</code> then you can use the <code>GetUserEffectivePermissions</code> and <code>CheckIfUserHasPermissions</code> methods:</p>
+<pre><code class="lang-csharp">// Get the permissions of a user
+var basePermissions = await context.Web.GetUserEffectivePermissionsAsync(&quot;joe@contoso.sharepoint.com&quot;);
+
+// Verify if a user has a permission
+if (await context.Web.CheckIfUserHasPermissionsAsync(&quot;joe@contoso.sharepoint.com&quot;, PermissionKind.AddListItems))
+{
+    // Do something
+}
 </code></pre>
 <h2 id="microsoft-365-users">Microsoft 365 users</h2>
 <p>When working with SharePoint sites you use a SharePoint user, but when you for example want to add a user to a Microsoft 365 group's owners you need to use a Microsoft Graph user object. When you either have a SharePoint user or Microsoft Graph user you can translate that user via <code>AsGraphUser</code> and <code>AsSharePointUser</code> methods. Below example shows how a user granted access to a Microsoft Teams team can be translated into a SharePoint user.</p>
@@ -183,5 +256,7 @@ var graphUser = await testUser.AsGraphUserAsync();
     
     <script type="text/javascript" src="../styles/docfx.vendor.js"></script>
     <script type="text/javascript" src="../styles/docfx.js"></script>
-    <script type="text/javascript" src="../styles/main.js"></script>  </body>
+    <script type="text/javascript" src="../styles/main.js"></script>    
+    <img src="https://m365-visitor-stats.azurewebsites.net/pnpcoresdk/docs">
+  </body>
 </html>

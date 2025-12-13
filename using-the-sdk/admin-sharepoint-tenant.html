@@ -8,7 +8,7 @@
     <title>Tenant | PnP Core SDK </title>
     <meta name="viewport" content="width=device-width">
     <meta name="title" content="Tenant | PnP Core SDK ">
-    <meta name="generator" content="docfx 2.56.5.0">
+    <meta name="generator" content="docfx 2.59.2.0">
     <meta name="description" content="The PnP Core SDK is a modern .NET SDK designed to work for Microsoft 365. It provides a unified object model for working with SharePoint Online and Teams which is agnostic to the underlying API's being called.">
     <link rel="shortcut icon" href="https://c.s-microsoft.com/favicon.ico?v2">
     <link rel="stylesheet" href="../styles/docfx.vendor.css">
@@ -78,7 +78,7 @@
           <div class="col-md-10">
             <article class="content wrap" id="_content" data-uid="">
                   <div class="contribution-panel mobile-hide pull-right">
-                      <a href="https://github.com/pnp/pnpcore/blob/dev/docs/using-the-sdk/admin-sharepoint-tenant.md/#L1" title="Improve this Doc" class="improve-doc-lg"><i class="glyphicon glyphicon-pencil"></i></a>
+                      <a href="https://github.com/gautamdsheth/pnpcore/blob/dev/docs/using-the-sdk/admin-sharepoint-tenant.md/#L1" title="Improve this Doc" class="improve-doc-lg"><i class="glyphicon glyphicon-pencil"></i></a>
                   </div>
                     <h1 id="tenant">Tenant</h1>
 
@@ -159,6 +159,35 @@ if (tenantProperties.BlockMacSync)
     // do work with the SharePoint Tenant Admin Center site
 }
 </code></pre>
+<h2 id="exporting-the-tenant-search-schema">Exporting the tenant search schema</h2>
+<p>The search schema can be exported and imported via an XML file, exporting is done using one of the <code>GetSearchConfigurationXml</code> methods:</p>
+<pre><code class="lang-csharp">// Get the tenant search configuration XML
+var searchConfigXml = await context.GetSharePointAdmin().GetTenantSearchConfigurationXmlAsync();
+</code></pre>
+<p>If you're only interested in understanding which managed properties were added for the tenant then you can also use one of the <code>GetSearchConfigurationManagedProperties</code> methods. These methods get the needed search configuration XML first and then parses it to return a collection of managed properties:</p>
+<pre><code class="lang-csharp">// Get tenant search configuration managed properties
+var managedProperties = await context.GetSharePointAdmin().GetTenantSearchConfigurationManagedPropertiesAsync();
+foreach(var mp in managedProperties)
+{
+    // Do something
+}
+</code></pre>
+<h2 id="importing-the-tenant-search-schema">Importing the tenant search schema</h2>
+<p>Just like the search schema can be exported it's also possible to import it again via calling the <code>SetSearchConfigurationXml</code> methods:</p>
+<pre><code class="lang-csharp">// Set tenant search configuration XML
+await context.GetSharePointAdmin().SetSearchConfigurationXmlAsync(searchConfigXml);
+</code></pre>
+<h2 id="joining-a-site-to-a-hub-that-requires-approval">Joining a site to a hub that requires approval</h2>
+<div class="IMPORTANT">
+<h5>Important</h5>
+<p>You need to be either a SharePoint Administrator or Global Administrator to use these methods.</p>
+</div>
+
+<p>Joining and un-joining a hub site can be done using methods (<code>JoinHubSite</code>, <code>UnJoinHubSite</code>) on <code>ISite</code> and it's recommended to use those. There's however the case where joining a hub site requires approval from the hub and in that case the existing methods (<code>JoinHubSite</code>) return an error (&quot;This Hub Site requires approval to join. Please resubmit this request with an Approval Token from the Hub Site admin.&quot;). To workaround this limitation you can use the tenant <code>ConnectToHubSite</code> methods:</p>
+<pre><code class="lang-csharp">await context.GetSharePointAdmin().ConnectToHubSiteAsync(
+    new Uri(&quot;https://contoso.sharepoint.com/sites/sitetojointohub&quot;), 
+    new Uri(&quot;https://contoso.sharepoint.com/sites/hubsite&quot;));
+</code></pre>
 </article>
           </div>
           <div class="hidden-sm col-md-2" role="complementary">
@@ -185,5 +214,7 @@ if (tenantProperties.BlockMacSync)
     
     <script type="text/javascript" src="../styles/docfx.vendor.js"></script>
     <script type="text/javascript" src="../styles/docfx.js"></script>
-    <script type="text/javascript" src="../styles/main.js"></script>  </body>
+    <script type="text/javascript" src="../styles/main.js"></script>    
+    <img src="https://m365-visitor-stats.azurewebsites.net/pnpcoresdk/docs">
+  </body>
 </html>

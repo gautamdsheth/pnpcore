@@ -10,7 +10,7 @@
     <meta name="viewport" content="width=device-width">
     <meta name="title" content="Interface IAppOperations
    | PnP Core SDK ">
-    <meta name="generator" content="docfx 2.56.5.0">
+    <meta name="generator" content="docfx 2.59.2.0">
     <meta name="description" content="The PnP Core SDK is a modern .NET SDK designed to work for Microsoft 365. It provides a unified object model for working with SharePoint Online and Teams which is agnostic to the underlying API's being called.">
     <link rel="shortcut icon" href="https://c.s-microsoft.com/favicon.ico?v2">
     <link rel="stylesheet" href="../styles/docfx.vendor.css">
@@ -80,8 +80,8 @@
           <div class="col-md-10">
             <article class="content wrap" id="_content" data-uid="PnP.Core.Admin.Model.SharePoint.IAppOperations">
                   <div class="contribution-panel mobile-hide pull-right">
-                      <a href="https://github.com/pnp/pnpcore/blob/dev/src/sdk/PnP.Core.Admin/Model/SharePoint/Core/Public/IAppOperations.cs/#L9" title="View Source" class="view-source-lg"><i class="fa fa-code"></i></a>
-                      <a href="https://github.com/pnp/pnpcore/new/dev/apiSpec/new?filename=PnP_Core_Admin_Model_SharePoint_IAppOperations.md&amp;value=---%0Auid%3A%20PnP.Core.Admin.Model.SharePoint.IAppOperations%0Asummary%3A%20'*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax'%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A" title="Improve this Doc" class="improve-doc-lg"><i class="glyphicon glyphicon-pencil"></i></a>
+                      <a href="https://github.com/gautamdsheth/pnpcore/blob/dev/src/sdk/PnP.Core.Admin/Model/SharePoint/Core/Public/IAppOperations.cs/#L9" title="View Source" class="view-source-lg"><i class="fa fa-code"></i></a>
+                      <a href="https://github.com/gautamdsheth/pnpcore/new/dev/apiSpec/new?filename=PnP_Core_Admin_Model_SharePoint_IAppOperations.md&amp;value=---%0Auid%3A%20PnP.Core.Admin.Model.SharePoint.IAppOperations%0Asummary%3A%20'*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax'%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A" title="Improve this Doc" class="improve-doc-lg"><i class="glyphicon glyphicon-pencil"></i></a>
                   </div>
                       <h1 id="PnP_Core_Admin_Model_SharePoint_IAppOperations" data-uid="PnP.Core.Admin.Model.SharePoint.IAppOperations">Interface IAppOperations
   </h1>
@@ -109,10 +109,65 @@
   
   <span class="small pull-right mobile-hide">
     <span class="divider"> </span>
-    <a href="https://github.com/pnp/pnpcore/new/dev/apiSpec/new?filename=PnP_Core_Admin_Model_SharePoint_IAppOperations_Deploy_Guid_System_Boolean_.md&amp;value=---%0Auid%3A%20PnP.Core.Admin.Model.SharePoint.IAppOperations.Deploy(Guid%2CSystem.Boolean)%0Asummary%3A%20'*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax'%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A" title="Improve this Doc"><i class="fa fa-pencil"></i></a>
+    <a href="https://github.com/gautamdsheth/pnpcore/new/dev/apiSpec/new?filename=PnP_Core_Admin_Model_SharePoint_IAppOperations_ApproveAsync_System_String_.md&amp;value=---%0Auid%3A%20PnP.Core.Admin.Model.SharePoint.IAppOperations.ApproveAsync(System.String)%0Asummary%3A%20'*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax'%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A" title="Improve this Doc"><i class="fa fa-pencil"></i></a>
   </span>
   <span class="small pull-right mobile-hide">
-    <a href="https://github.com/pnp/pnpcore/blob/dev/src/sdk/PnP.Core.Admin/Model/SharePoint/Core/Public/IAppOperations.cs/#L17" title="View Source"><i class="fa fa-code"></i></a>
+    <a href="https://github.com/gautamdsheth/pnpcore/blob/dev/src/sdk/PnP.Core.Admin/Model/SharePoint/Core/Public/IAppOperations.cs/#L102" title="View Source"><i class="fa fa-code"></i></a>
+  </span>
+  
+  <a id="PnP_Core_Admin_Model_SharePoint_IAppOperations_ApproveAsync_" data-uid="PnP.Core.Admin.Model.SharePoint.IAppOperations.ApproveAsync*"></a>
+  
+  <h4 id="PnP_Core_Admin_Model_SharePoint_IAppOperations_ApproveAsync_System_String_" data-uid="PnP.Core.Admin.Model.SharePoint.IAppOperations.ApproveAsync(System.String)"><a href="#collapsible-PnP_Core_Admin_Model_SharePoint_IAppOperations_ApproveAsync_System_String_" class="expander" data-toggle="collapse">ApproveAsync(String)</a></h4>
+  
+  <div id="collapsible-PnP_Core_Admin_Model_SharePoint_IAppOperations_ApproveAsync_System_String_" class="collapse in">
+  <div class="markdown level1 summary"><p>Approves all permissions requested by the app.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">Task&lt;IPermissionGrant2[]&gt; ApproveAsync(string aadPermissions)</code></pre>
+  </div>
+
+  <h5 class="parameters">Parameters</h5>
+  <table>
+    <tr>
+      <td>
+        <span class="pull-right"><span class="xref">System.String</span></span>
+        <span class="parametername">aadPermissions</span>
+        <p><p>The requested AAD permissions, e.g.</p>
+</p>
+      </td>
+    </tr>
+  </table>
+  
+  <h5 class="returns">Returns</h5>
+  <table>
+    <tr>
+      <td>
+        <span class="xref">Task</span>&lt;<a class="xref" href="PnP.Core.Admin.Model.SharePoint.IPermissionGrant2.html">IPermissionGrant2</a>[]&gt;
+        <p>
+      </td>
+    </tr>
+  </table>
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  </div>
+  
+  <span class="small pull-right mobile-hide">
+    <span class="divider"> </span>
+    <a href="https://github.com/gautamdsheth/pnpcore/new/dev/apiSpec/new?filename=PnP_Core_Admin_Model_SharePoint_IAppOperations_Deploy_Guid_System_Boolean_.md&amp;value=---%0Auid%3A%20PnP.Core.Admin.Model.SharePoint.IAppOperations.Deploy(Guid%2CSystem.Boolean)%0Asummary%3A%20'*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax'%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A" title="Improve this Doc"><i class="fa fa-pencil"></i></a>
+  </span>
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/gautamdsheth/pnpcore/blob/dev/src/sdk/PnP.Core.Admin/Model/SharePoint/Core/Public/IAppOperations.cs/#L17" title="View Source"><i class="fa fa-code"></i></a>
   </span>
   
   <a id="PnP_Core_Admin_Model_SharePoint_IAppOperations_Deploy_" data-uid="PnP.Core.Admin.Model.SharePoint.IAppOperations.Deploy*"></a>
@@ -141,7 +196,7 @@
     </tr>
     <tr>
       <td>
-        <span class="pull-right"><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.boolean">Boolean</a></span>
+        <span class="pull-right"><span class="xref">System.Boolean</span></span>
         <span class="parametername">skipFeatureDeployment</span>
         <p><p>If set to true will skip the feature deployment for tenant scoped apps.</p>
 </p>
@@ -153,7 +208,7 @@
   <table>
     <tr>
       <td>
-        <a class="xref" href="https://docs.microsoft.com/dotnet/api/system.boolean">Boolean</a>
+        <span class="xref">System.Boolean</span>
         <p><p><em>true</em> if deployment was successful.</p>
 </p>
       </td>
@@ -173,10 +228,10 @@
   
   <span class="small pull-right mobile-hide">
     <span class="divider"> </span>
-    <a href="https://github.com/pnp/pnpcore/new/dev/apiSpec/new?filename=PnP_Core_Admin_Model_SharePoint_IAppOperations_DeployAsync_Guid_System_Boolean_.md&amp;value=---%0Auid%3A%20PnP.Core.Admin.Model.SharePoint.IAppOperations.DeployAsync(Guid%2CSystem.Boolean)%0Asummary%3A%20'*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax'%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A" title="Improve this Doc"><i class="fa fa-pencil"></i></a>
+    <a href="https://github.com/gautamdsheth/pnpcore/new/dev/apiSpec/new?filename=PnP_Core_Admin_Model_SharePoint_IAppOperations_DeployAsync_Guid_System_Boolean_.md&amp;value=---%0Auid%3A%20PnP.Core.Admin.Model.SharePoint.IAppOperations.DeployAsync(Guid%2CSystem.Boolean)%0Asummary%3A%20'*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax'%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A" title="Improve this Doc"><i class="fa fa-pencil"></i></a>
   </span>
   <span class="small pull-right mobile-hide">
-    <a href="https://github.com/pnp/pnpcore/blob/dev/src/sdk/PnP.Core.Admin/Model/SharePoint/Core/Public/IAppOperations.cs/#L25" title="View Source"><i class="fa fa-code"></i></a>
+    <a href="https://github.com/gautamdsheth/pnpcore/blob/dev/src/sdk/PnP.Core.Admin/Model/SharePoint/Core/Public/IAppOperations.cs/#L25" title="View Source"><i class="fa fa-code"></i></a>
   </span>
   
   <a id="PnP_Core_Admin_Model_SharePoint_IAppOperations_DeployAsync_" data-uid="PnP.Core.Admin.Model.SharePoint.IAppOperations.DeployAsync*"></a>
@@ -205,7 +260,7 @@
     </tr>
     <tr>
       <td>
-        <span class="pull-right"><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.boolean">Boolean</a></span>
+        <span class="pull-right"><span class="xref">System.Boolean</span></span>
         <span class="parametername">skipFeatureDeployment</span>
         <p><p>If set to true will skip the feature deployment for tenant scoped apps.</p>
 </p>
@@ -217,7 +272,7 @@
   <table>
     <tr>
       <td>
-        <span class="xref">Task</span>&lt;<a class="xref" href="https://docs.microsoft.com/dotnet/api/system.boolean">Boolean</a>&gt;
+        <span class="xref">Task</span>&lt;<span class="xref">System.Boolean</span>&gt;
         <p><p><em>true</em> if deployment was successful.</p>
 </p>
       </td>
@@ -237,10 +292,10 @@
   
   <span class="small pull-right mobile-hide">
     <span class="divider"> </span>
-    <a href="https://github.com/pnp/pnpcore/new/dev/apiSpec/new?filename=PnP_Core_Admin_Model_SharePoint_IAppOperations_Install_Guid_.md&amp;value=---%0Auid%3A%20PnP.Core.Admin.Model.SharePoint.IAppOperations.Install(Guid)%0Asummary%3A%20'*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax'%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A" title="Improve this Doc"><i class="fa fa-pencil"></i></a>
+    <a href="https://github.com/gautamdsheth/pnpcore/new/dev/apiSpec/new?filename=PnP_Core_Admin_Model_SharePoint_IAppOperations_Install_Guid_.md&amp;value=---%0Auid%3A%20PnP.Core.Admin.Model.SharePoint.IAppOperations.Install(Guid)%0Asummary%3A%20'*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax'%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A" title="Improve this Doc"><i class="fa fa-pencil"></i></a>
   </span>
   <span class="small pull-right mobile-hide">
-    <a href="https://github.com/pnp/pnpcore/blob/dev/src/sdk/PnP.Core.Admin/Model/SharePoint/Core/Public/IAppOperations.cs/#L60" title="View Source"><i class="fa fa-code"></i></a>
+    <a href="https://github.com/gautamdsheth/pnpcore/blob/dev/src/sdk/PnP.Core.Admin/Model/SharePoint/Core/Public/IAppOperations.cs/#L60" title="View Source"><i class="fa fa-code"></i></a>
   </span>
   
   <a id="PnP_Core_Admin_Model_SharePoint_IAppOperations_Install_" data-uid="PnP.Core.Admin.Model.SharePoint.IAppOperations.Install*"></a>
@@ -273,7 +328,7 @@
   <table>
     <tr>
       <td>
-        <a class="xref" href="https://docs.microsoft.com/dotnet/api/system.boolean">Boolean</a>
+        <span class="xref">System.Boolean</span>
         <p><p><em>true</em> if installation was successful.</p>
 </p>
       </td>
@@ -293,10 +348,10 @@
   
   <span class="small pull-right mobile-hide">
     <span class="divider"> </span>
-    <a href="https://github.com/pnp/pnpcore/new/dev/apiSpec/new?filename=PnP_Core_Admin_Model_SharePoint_IAppOperations_InstallAsync_Guid_.md&amp;value=---%0Auid%3A%20PnP.Core.Admin.Model.SharePoint.IAppOperations.InstallAsync(Guid)%0Asummary%3A%20'*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax'%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A" title="Improve this Doc"><i class="fa fa-pencil"></i></a>
+    <a href="https://github.com/gautamdsheth/pnpcore/new/dev/apiSpec/new?filename=PnP_Core_Admin_Model_SharePoint_IAppOperations_InstallAsync_Guid_.md&amp;value=---%0Auid%3A%20PnP.Core.Admin.Model.SharePoint.IAppOperations.InstallAsync(Guid)%0Asummary%3A%20'*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax'%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A" title="Improve this Doc"><i class="fa fa-pencil"></i></a>
   </span>
   <span class="small pull-right mobile-hide">
-    <a href="https://github.com/pnp/pnpcore/blob/dev/src/sdk/PnP.Core.Admin/Model/SharePoint/Core/Public/IAppOperations.cs/#L67" title="View Source"><i class="fa fa-code"></i></a>
+    <a href="https://github.com/gautamdsheth/pnpcore/blob/dev/src/sdk/PnP.Core.Admin/Model/SharePoint/Core/Public/IAppOperations.cs/#L67" title="View Source"><i class="fa fa-code"></i></a>
   </span>
   
   <a id="PnP_Core_Admin_Model_SharePoint_IAppOperations_InstallAsync_" data-uid="PnP.Core.Admin.Model.SharePoint.IAppOperations.InstallAsync*"></a>
@@ -329,7 +384,7 @@
   <table>
     <tr>
       <td>
-        <span class="xref">Task</span>&lt;<a class="xref" href="https://docs.microsoft.com/dotnet/api/system.boolean">Boolean</a>&gt;
+        <span class="xref">Task</span>&lt;<span class="xref">System.Boolean</span>&gt;
         <p><p><em>true</em> if installation was successful.</p>
 </p>
       </td>
@@ -349,10 +404,10 @@
   
   <span class="small pull-right mobile-hide">
     <span class="divider"> </span>
-    <a href="https://github.com/pnp/pnpcore/new/dev/apiSpec/new?filename=PnP_Core_Admin_Model_SharePoint_IAppOperations_Remove_Guid_.md&amp;value=---%0Auid%3A%20PnP.Core.Admin.Model.SharePoint.IAppOperations.Remove(Guid)%0Asummary%3A%20'*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax'%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A" title="Improve this Doc"><i class="fa fa-pencil"></i></a>
+    <a href="https://github.com/gautamdsheth/pnpcore/new/dev/apiSpec/new?filename=PnP_Core_Admin_Model_SharePoint_IAppOperations_Remove_Guid_.md&amp;value=---%0Auid%3A%20PnP.Core.Admin.Model.SharePoint.IAppOperations.Remove(Guid)%0Asummary%3A%20'*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax'%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A" title="Improve this Doc"><i class="fa fa-pencil"></i></a>
   </span>
   <span class="small pull-right mobile-hide">
-    <a href="https://github.com/pnp/pnpcore/blob/dev/src/sdk/PnP.Core.Admin/Model/SharePoint/Core/Public/IAppOperations.cs/#L46" title="View Source"><i class="fa fa-code"></i></a>
+    <a href="https://github.com/gautamdsheth/pnpcore/blob/dev/src/sdk/PnP.Core.Admin/Model/SharePoint/Core/Public/IAppOperations.cs/#L46" title="View Source"><i class="fa fa-code"></i></a>
   </span>
   
   <a id="PnP_Core_Admin_Model_SharePoint_IAppOperations_Remove_" data-uid="PnP.Core.Admin.Model.SharePoint.IAppOperations.Remove*"></a>
@@ -385,7 +440,7 @@
   <table>
     <tr>
       <td>
-        <a class="xref" href="https://docs.microsoft.com/dotnet/api/system.boolean">Boolean</a>
+        <span class="xref">System.Boolean</span>
         <p><p><em>true</em> if remove was successful.</p>
 </p>
       </td>
@@ -405,10 +460,10 @@
   
   <span class="small pull-right mobile-hide">
     <span class="divider"> </span>
-    <a href="https://github.com/pnp/pnpcore/new/dev/apiSpec/new?filename=PnP_Core_Admin_Model_SharePoint_IAppOperations_RemoveAsync_Guid_.md&amp;value=---%0Auid%3A%20PnP.Core.Admin.Model.SharePoint.IAppOperations.RemoveAsync(Guid)%0Asummary%3A%20'*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax'%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A" title="Improve this Doc"><i class="fa fa-pencil"></i></a>
+    <a href="https://github.com/gautamdsheth/pnpcore/new/dev/apiSpec/new?filename=PnP_Core_Admin_Model_SharePoint_IAppOperations_RemoveAsync_Guid_.md&amp;value=---%0Auid%3A%20PnP.Core.Admin.Model.SharePoint.IAppOperations.RemoveAsync(Guid)%0Asummary%3A%20'*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax'%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A" title="Improve this Doc"><i class="fa fa-pencil"></i></a>
   </span>
   <span class="small pull-right mobile-hide">
-    <a href="https://github.com/pnp/pnpcore/blob/dev/src/sdk/PnP.Core.Admin/Model/SharePoint/Core/Public/IAppOperations.cs/#L53" title="View Source"><i class="fa fa-code"></i></a>
+    <a href="https://github.com/gautamdsheth/pnpcore/blob/dev/src/sdk/PnP.Core.Admin/Model/SharePoint/Core/Public/IAppOperations.cs/#L53" title="View Source"><i class="fa fa-code"></i></a>
   </span>
   
   <a id="PnP_Core_Admin_Model_SharePoint_IAppOperations_RemoveAsync_" data-uid="PnP.Core.Admin.Model.SharePoint.IAppOperations.RemoveAsync*"></a>
@@ -441,7 +496,7 @@
   <table>
     <tr>
       <td>
-        <span class="xref">Task</span>&lt;<a class="xref" href="https://docs.microsoft.com/dotnet/api/system.boolean">Boolean</a>&gt;
+        <span class="xref">Task</span>&lt;<span class="xref">System.Boolean</span>&gt;
         <p><p><em>true</em> if remove was successful.</p>
 </p>
       </td>
@@ -461,10 +516,10 @@
   
   <span class="small pull-right mobile-hide">
     <span class="divider"> </span>
-    <a href="https://github.com/pnp/pnpcore/new/dev/apiSpec/new?filename=PnP_Core_Admin_Model_SharePoint_IAppOperations_Retract_Guid_.md&amp;value=---%0Auid%3A%20PnP.Core.Admin.Model.SharePoint.IAppOperations.Retract(Guid)%0Asummary%3A%20'*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax'%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A" title="Improve this Doc"><i class="fa fa-pencil"></i></a>
+    <a href="https://github.com/gautamdsheth/pnpcore/new/dev/apiSpec/new?filename=PnP_Core_Admin_Model_SharePoint_IAppOperations_Retract_Guid_.md&amp;value=---%0Auid%3A%20PnP.Core.Admin.Model.SharePoint.IAppOperations.Retract(Guid)%0Asummary%3A%20'*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax'%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A" title="Improve this Doc"><i class="fa fa-pencil"></i></a>
   </span>
   <span class="small pull-right mobile-hide">
-    <a href="https://github.com/pnp/pnpcore/blob/dev/src/sdk/PnP.Core.Admin/Model/SharePoint/Core/Public/IAppOperations.cs/#L32" title="View Source"><i class="fa fa-code"></i></a>
+    <a href="https://github.com/gautamdsheth/pnpcore/blob/dev/src/sdk/PnP.Core.Admin/Model/SharePoint/Core/Public/IAppOperations.cs/#L32" title="View Source"><i class="fa fa-code"></i></a>
   </span>
   
   <a id="PnP_Core_Admin_Model_SharePoint_IAppOperations_Retract_" data-uid="PnP.Core.Admin.Model.SharePoint.IAppOperations.Retract*"></a>
@@ -497,7 +552,7 @@
   <table>
     <tr>
       <td>
-        <a class="xref" href="https://docs.microsoft.com/dotnet/api/system.boolean">Boolean</a>
+        <span class="xref">System.Boolean</span>
         <p><p><em>true</em> if retract was successful.</p>
 </p>
       </td>
@@ -517,10 +572,10 @@
   
   <span class="small pull-right mobile-hide">
     <span class="divider"> </span>
-    <a href="https://github.com/pnp/pnpcore/new/dev/apiSpec/new?filename=PnP_Core_Admin_Model_SharePoint_IAppOperations_RetractAsync_Guid_.md&amp;value=---%0Auid%3A%20PnP.Core.Admin.Model.SharePoint.IAppOperations.RetractAsync(Guid)%0Asummary%3A%20'*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax'%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A" title="Improve this Doc"><i class="fa fa-pencil"></i></a>
+    <a href="https://github.com/gautamdsheth/pnpcore/new/dev/apiSpec/new?filename=PnP_Core_Admin_Model_SharePoint_IAppOperations_RetractAsync_Guid_.md&amp;value=---%0Auid%3A%20PnP.Core.Admin.Model.SharePoint.IAppOperations.RetractAsync(Guid)%0Asummary%3A%20'*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax'%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A" title="Improve this Doc"><i class="fa fa-pencil"></i></a>
   </span>
   <span class="small pull-right mobile-hide">
-    <a href="https://github.com/pnp/pnpcore/blob/dev/src/sdk/PnP.Core.Admin/Model/SharePoint/Core/Public/IAppOperations.cs/#L39" title="View Source"><i class="fa fa-code"></i></a>
+    <a href="https://github.com/gautamdsheth/pnpcore/blob/dev/src/sdk/PnP.Core.Admin/Model/SharePoint/Core/Public/IAppOperations.cs/#L39" title="View Source"><i class="fa fa-code"></i></a>
   </span>
   
   <a id="PnP_Core_Admin_Model_SharePoint_IAppOperations_RetractAsync_" data-uid="PnP.Core.Admin.Model.SharePoint.IAppOperations.RetractAsync*"></a>
@@ -553,7 +608,7 @@
   <table>
     <tr>
       <td>
-        <span class="xref">Task</span>&lt;<a class="xref" href="https://docs.microsoft.com/dotnet/api/system.boolean">Boolean</a>&gt;
+        <span class="xref">Task</span>&lt;<span class="xref">System.Boolean</span>&gt;
         <p><p><em>true</em> if retract was successful.</p>
 </p>
       </td>
@@ -573,10 +628,10 @@
   
   <span class="small pull-right mobile-hide">
     <span class="divider"> </span>
-    <a href="https://github.com/pnp/pnpcore/new/dev/apiSpec/new?filename=PnP_Core_Admin_Model_SharePoint_IAppOperations_Uninstall_Guid_.md&amp;value=---%0Auid%3A%20PnP.Core.Admin.Model.SharePoint.IAppOperations.Uninstall(Guid)%0Asummary%3A%20'*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax'%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A" title="Improve this Doc"><i class="fa fa-pencil"></i></a>
+    <a href="https://github.com/gautamdsheth/pnpcore/new/dev/apiSpec/new?filename=PnP_Core_Admin_Model_SharePoint_IAppOperations_Uninstall_Guid_.md&amp;value=---%0Auid%3A%20PnP.Core.Admin.Model.SharePoint.IAppOperations.Uninstall(Guid)%0Asummary%3A%20'*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax'%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A" title="Improve this Doc"><i class="fa fa-pencil"></i></a>
   </span>
   <span class="small pull-right mobile-hide">
-    <a href="https://github.com/pnp/pnpcore/blob/dev/src/sdk/PnP.Core.Admin/Model/SharePoint/Core/Public/IAppOperations.cs/#L88" title="View Source"><i class="fa fa-code"></i></a>
+    <a href="https://github.com/gautamdsheth/pnpcore/blob/dev/src/sdk/PnP.Core.Admin/Model/SharePoint/Core/Public/IAppOperations.cs/#L88" title="View Source"><i class="fa fa-code"></i></a>
   </span>
   
   <a id="PnP_Core_Admin_Model_SharePoint_IAppOperations_Uninstall_" data-uid="PnP.Core.Admin.Model.SharePoint.IAppOperations.Uninstall*"></a>
@@ -609,7 +664,7 @@
   <table>
     <tr>
       <td>
-        <a class="xref" href="https://docs.microsoft.com/dotnet/api/system.boolean">Boolean</a>
+        <span class="xref">System.Boolean</span>
         <p><p><em>true</em> if uninstall was successful.</p>
 </p>
       </td>
@@ -629,10 +684,10 @@
   
   <span class="small pull-right mobile-hide">
     <span class="divider"> </span>
-    <a href="https://github.com/pnp/pnpcore/new/dev/apiSpec/new?filename=PnP_Core_Admin_Model_SharePoint_IAppOperations_UninstallAsync_Guid_.md&amp;value=---%0Auid%3A%20PnP.Core.Admin.Model.SharePoint.IAppOperations.UninstallAsync(Guid)%0Asummary%3A%20'*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax'%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A" title="Improve this Doc"><i class="fa fa-pencil"></i></a>
+    <a href="https://github.com/gautamdsheth/pnpcore/new/dev/apiSpec/new?filename=PnP_Core_Admin_Model_SharePoint_IAppOperations_UninstallAsync_Guid_.md&amp;value=---%0Auid%3A%20PnP.Core.Admin.Model.SharePoint.IAppOperations.UninstallAsync(Guid)%0Asummary%3A%20'*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax'%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A" title="Improve this Doc"><i class="fa fa-pencil"></i></a>
   </span>
   <span class="small pull-right mobile-hide">
-    <a href="https://github.com/pnp/pnpcore/blob/dev/src/sdk/PnP.Core.Admin/Model/SharePoint/Core/Public/IAppOperations.cs/#L95" title="View Source"><i class="fa fa-code"></i></a>
+    <a href="https://github.com/gautamdsheth/pnpcore/blob/dev/src/sdk/PnP.Core.Admin/Model/SharePoint/Core/Public/IAppOperations.cs/#L95" title="View Source"><i class="fa fa-code"></i></a>
   </span>
   
   <a id="PnP_Core_Admin_Model_SharePoint_IAppOperations_UninstallAsync_" data-uid="PnP.Core.Admin.Model.SharePoint.IAppOperations.UninstallAsync*"></a>
@@ -665,7 +720,7 @@
   <table>
     <tr>
       <td>
-        <span class="xref">Task</span>&lt;<a class="xref" href="https://docs.microsoft.com/dotnet/api/system.boolean">Boolean</a>&gt;
+        <span class="xref">Task</span>&lt;<span class="xref">System.Boolean</span>&gt;
         <p><p><em>true</em> if uninstall was successful.</p>
 </p>
       </td>
@@ -685,10 +740,10 @@
   
   <span class="small pull-right mobile-hide">
     <span class="divider"> </span>
-    <a href="https://github.com/pnp/pnpcore/new/dev/apiSpec/new?filename=PnP_Core_Admin_Model_SharePoint_IAppOperations_Upgrade_Guid_.md&amp;value=---%0Auid%3A%20PnP.Core.Admin.Model.SharePoint.IAppOperations.Upgrade(Guid)%0Asummary%3A%20'*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax'%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A" title="Improve this Doc"><i class="fa fa-pencil"></i></a>
+    <a href="https://github.com/gautamdsheth/pnpcore/new/dev/apiSpec/new?filename=PnP_Core_Admin_Model_SharePoint_IAppOperations_Upgrade_Guid_.md&amp;value=---%0Auid%3A%20PnP.Core.Admin.Model.SharePoint.IAppOperations.Upgrade(Guid)%0Asummary%3A%20'*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax'%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A" title="Improve this Doc"><i class="fa fa-pencil"></i></a>
   </span>
   <span class="small pull-right mobile-hide">
-    <a href="https://github.com/pnp/pnpcore/blob/dev/src/sdk/PnP.Core.Admin/Model/SharePoint/Core/Public/IAppOperations.cs/#L74" title="View Source"><i class="fa fa-code"></i></a>
+    <a href="https://github.com/gautamdsheth/pnpcore/blob/dev/src/sdk/PnP.Core.Admin/Model/SharePoint/Core/Public/IAppOperations.cs/#L74" title="View Source"><i class="fa fa-code"></i></a>
   </span>
   
   <a id="PnP_Core_Admin_Model_SharePoint_IAppOperations_Upgrade_" data-uid="PnP.Core.Admin.Model.SharePoint.IAppOperations.Upgrade*"></a>
@@ -721,7 +776,7 @@
   <table>
     <tr>
       <td>
-        <a class="xref" href="https://docs.microsoft.com/dotnet/api/system.boolean">Boolean</a>
+        <span class="xref">System.Boolean</span>
         <p><p><em>true</em> if upgrade was successful.</p>
 </p>
       </td>
@@ -741,10 +796,10 @@
   
   <span class="small pull-right mobile-hide">
     <span class="divider"> </span>
-    <a href="https://github.com/pnp/pnpcore/new/dev/apiSpec/new?filename=PnP_Core_Admin_Model_SharePoint_IAppOperations_UpgradeAsync_Guid_.md&amp;value=---%0Auid%3A%20PnP.Core.Admin.Model.SharePoint.IAppOperations.UpgradeAsync(Guid)%0Asummary%3A%20'*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax'%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A" title="Improve this Doc"><i class="fa fa-pencil"></i></a>
+    <a href="https://github.com/gautamdsheth/pnpcore/new/dev/apiSpec/new?filename=PnP_Core_Admin_Model_SharePoint_IAppOperations_UpgradeAsync_Guid_.md&amp;value=---%0Auid%3A%20PnP.Core.Admin.Model.SharePoint.IAppOperations.UpgradeAsync(Guid)%0Asummary%3A%20'*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax'%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A" title="Improve this Doc"><i class="fa fa-pencil"></i></a>
   </span>
   <span class="small pull-right mobile-hide">
-    <a href="https://github.com/pnp/pnpcore/blob/dev/src/sdk/PnP.Core.Admin/Model/SharePoint/Core/Public/IAppOperations.cs/#L81" title="View Source"><i class="fa fa-code"></i></a>
+    <a href="https://github.com/gautamdsheth/pnpcore/blob/dev/src/sdk/PnP.Core.Admin/Model/SharePoint/Core/Public/IAppOperations.cs/#L81" title="View Source"><i class="fa fa-code"></i></a>
   </span>
   
   <a id="PnP_Core_Admin_Model_SharePoint_IAppOperations_UpgradeAsync_" data-uid="PnP.Core.Admin.Model.SharePoint.IAppOperations.UpgradeAsync*"></a>
@@ -777,7 +832,7 @@
   <table>
     <tr>
       <td>
-        <span class="xref">Task</span>&lt;<a class="xref" href="https://docs.microsoft.com/dotnet/api/system.boolean">Boolean</a>&gt;
+        <span class="xref">Task</span>&lt;<span class="xref">System.Boolean</span>&gt;
         <p><p><em>true</em> if upgrade was successful.</p>
 </p>
       </td>
@@ -822,5 +877,7 @@
     
     <script type="text/javascript" src="../styles/docfx.vendor.js"></script>
     <script type="text/javascript" src="../styles/docfx.js"></script>
-    <script type="text/javascript" src="../styles/main.js"></script>  </body>
+    <script type="text/javascript" src="../styles/main.js"></script>    
+    <img src="https://m365-visitor-stats.azurewebsites.net/pnpcoresdk/docs">
+  </body>
 </html>

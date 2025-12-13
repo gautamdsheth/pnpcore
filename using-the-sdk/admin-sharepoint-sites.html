@@ -8,7 +8,7 @@
     <title>Site Collections | PnP Core SDK </title>
     <meta name="viewport" content="width=device-width">
     <meta name="title" content="Site Collections | PnP Core SDK ">
-    <meta name="generator" content="docfx 2.56.5.0">
+    <meta name="generator" content="docfx 2.59.2.0">
     <meta name="description" content="The PnP Core SDK is a modern .NET SDK designed to work for Microsoft 365. It provides a unified object model for working with SharePoint Online and Teams which is agnostic to the underlying API's being called.">
     <link rel="shortcut icon" href="https://c.s-microsoft.com/favicon.ico?v2">
     <link rel="stylesheet" href="../styles/docfx.vendor.css">
@@ -78,7 +78,7 @@
           <div class="col-md-10">
             <article class="content wrap" id="_content" data-uid="">
                   <div class="contribution-panel mobile-hide pull-right">
-                      <a href="https://github.com/pnp/pnpcore/blob/dev/docs/using-the-sdk/admin-sharepoint-sites.md/#L1" title="Improve this Doc" class="improve-doc-lg"><i class="glyphicon glyphicon-pencil"></i></a>
+                      <a href="https://github.com/gautamdsheth/pnpcore/blob/dev/docs/using-the-sdk/admin-sharepoint-sites.md/#L1" title="Improve this Doc" class="improve-doc-lg"><i class="glyphicon glyphicon-pencil"></i></a>
                   </div>
                     <h1 id="site-collections">Site Collections</h1>
 
@@ -99,6 +99,11 @@
     var url = context.GetSharePointAdmin().GetTenantAdminCenterUri();
 }
 </code></pre>
+
+<div class="NOTE">
+<h5>Note</h5>
+<p>If your tenant is using vanity URL's then you'll need to populate the <code>VanityUrlOptions</code> class and pass it to any method that allows it.</p>
+</div>
 <h2 id="enumerate-the-site-collections-in-a-tenant">Enumerate the site collections in a tenant</h2>
 <p>The typical SharePoint Online tenants contains hundreds of site collections and for quite often there's a need to perform admin tasks on all site collections, so being able to enumerate sites is important. The PnP Core SDK Admin component offers two approaches.</p>
 <h3 id="getting-all-site-collections">Getting all site collections</h3>
@@ -129,12 +134,24 @@ var siteCollections = await context.GetSiteCollectionManager().GetSiteCollection
 <li>Storage quota information</li>
 <li>Template details</li>
 </ul>
+<p>This method also can optionally return the site collections connected to shared and private Microsoft Teams channels by setting the <code>includeSharedAndPrivateTeamChannelSites</code> parameter.</p>
 <p>Below sample shows how to use the <code>GetSiteCollectionsWithDetails</code> methods:</p>
 <pre><code class="lang-csharp">// Get a list of site collections with details about each site collection
 var siteCollections = await context.GetSiteCollectionManager().GetSiteCollectionsWithDetailsAsync();
 
+// Get a list of site collections with details about each site collection, including the site collections connected to shared and private Microsoft Teams channels
+var siteCollections = await context.GetSiteCollectionManager().GetSiteCollectionsWithDetailsAsync(includeSharedAndPrivateTeamChannelSites: true);
+
 // Get details for one given site collection
 var siteToCheckDetails = await context.GetSiteCollectionManager().GetSiteCollectionWithDetailsAsync(new Uri(&quot;https://contoso.sharepoint.com/sites/sitetocheck&quot;));
+</code></pre>
+<h2 id="enumerate-all-webs-in-a-site-collection">Enumerate all webs in a site collection</h2>
+<p>If you want to know all the webs that exist in a site collection then you can use the <code>GetSiteCollectionWebsWithDetails</code> methods. These methods will return a list with information about <strong>all</strong> webs in the site collection, webs are enumerated recursively to ensure all webs are listed. By default app webs (being created as part of installed SharePoint add-ins) are skipped but these can optionally be included.</p>
+<pre><code class="lang-csharp">var webs = await context.GetSiteCollectionManager().GetSiteCollectionWebsWithDetailsAsync();
+foreach(var web in webs)
+{
+    // do something with the web
+}
 </code></pre>
 <h2 id="getting-and-setting-site-collection-properties">Getting and setting site collection properties</h2>
 <div class="IMPORTANT">
@@ -178,7 +195,7 @@ await siteProperties.UpdateAsync();
 <tr>
 <td>Modern, with group</td>
 <td>Use <code>TeamSiteOptions</code></td>
-<td>coming soon</td>
+<td>Use <code>TeamSiteOptions</code>. The <code>Owners</code> property must be set.</td>
 </tr>
 <tr>
 <td>Classic site</td>
@@ -198,7 +215,8 @@ await siteProperties.UpdateAsync();
 <p><strong>When creating classic sites</strong> you need to be either a SharePoint Administrator or Global Administrator to use these methods.</p>
 </div>
 <p>The code structure to create a site collection is identical, regardless of which site you're creating or which type of permission you're using:</p>
-<pre><code class="lang-csharp">var communicationSiteToCreate = new CommunicationSiteOptions(new Uri(&quot;https://contoso.sharepoint.com/sites/sitename&quot;), &quot;My communication site&quot;)
+<pre><code class="lang-csharp">// Create communication site
+var communicationSiteToCreate = new CommunicationSiteOptions(new Uri(&quot;https://contoso.sharepoint.com/sites/sitename&quot;), &quot;My communication site&quot;)
 {
     Description = &quot;My site description&quot;,
     Language = Language.English,
@@ -207,7 +225,25 @@ await siteProperties.UpdateAsync();
 using (var newSiteContext = await context.GetSiteCollectionManager().CreateSiteCollectionAsync(communicationSiteToCreate))
 {
     // Do work on the created site collection via the newSiteContext
-}
+};
+
+// Create group connected team site, using application permissions
+var teamSiteToCreate = new TeamSiteOptions(&quot;mynewsite&quot;, &quot;My new site&quot;)
+{
+    Description = &quot;My site description&quot;,
+    IsPublic = true,
+    Owners = new string[] { &quot;ann@contoso.onmicrosoft.com&quot; }
+};
+
+SiteCreationOptions siteCreationOptions = new SiteCreationOptions()
+{
+    UsingApplicationPermissions = true
+};
+
+using (var newSiteContext = await context.GetSiteCollectionManager().CreateSiteCollectionAsync(teamSiteToCreate, siteCreationOptions))
+{
+    // Do work on the created site collection via the newSiteContext
+};
 </code></pre>
 <p>So depending on what <code>Options</code> object you pass into the <code>CreateSiteCollection</code> method a different type of site collection will be created. The constructors of the respective <code>Options</code> classes will ensure you're providing the minimally needed information needed to create the site collection, additional input can always be provided via the other <code>Options</code> class attributes.</p>
 <h3 id="controlling-the-site-collection-creation-behavior">Controlling the site collection creation behavior</h3>
@@ -288,6 +324,18 @@ using (var newSiteContext = await context.GetSiteCollectionManager().CreateSiteC
 <pre><code class="lang-csharp">ConnectSiteToGroupOptions groupConnectOptions = new ConnectSiteToGroupOptions(new Uri(&quot;https://contoso.sharepoint.com/sites/sitetogroupconnect&quot;), &quot;sitealias&quot;, &quot;Site title&quot;);
 await context.GetSiteCollectionManager().ConnectSiteCollectionToGroupAsync(groupConnectOptions);
 </code></pre>
+<h2 id="checking-if-a-site-collection-exists">Checking if a site collection exists</h2>
+<p>To verify if a site collection exists you enumerate the site collections or try to get the site collection properties as described above, however these methods require you to have admin privileges. Using the <code>SiteExists</code> methods you can verify the existence of a site based upon simply trying to create a <code>PnPContext</code> for the site.</p>
+<pre><code class="lang-csharp">var exists = await context.GetSiteCollectionManager().SiteExistsAsync(new Uri(&quot;https://contoso.sharepoint.com/sites/doiexist&quot;));
+if (exists)
+{
+    // do something
+}
+</code></pre>
+<div class="NOTE">
+<h5>Note</h5>
+<p>Sites living in the recycle bin are listed as &quot;non existing&quot; via this method.</p>
+</div>
 <h2 id="recycling-site-collections">Recycling site collections</h2>
 <div class="IMPORTANT">
 <h5>Important</h5>
@@ -321,6 +369,10 @@ foreach(var site in recycledSites)
 <p>You need to be either a SharePoint Administrator or Global Administrator to use these methods.</p>
 </div>
 
+<div class="NOTE">
+<h5>Note</h5>
+<p>When the site collection being restored has an associated Microsoft 365 group then this group is also restored. This requires the <code>Group.ReadWrite.All</code> delegated or application permission.</p>
+</div>
 <p>A recycled site collection can be restored as long it still sits in the site collection recycle bin. To do so use the <code>RestoreSiteCollection</code> methods:</p>
 <pre><code class="lang-csharp">var recycledSites = await context.GetSiteCollectionManager().GetRecycledSiteCollectionsAsync();
 foreach(var site in recycledSites)
@@ -329,13 +381,34 @@ foreach(var site in recycledSites)
     await context.GetSiteCollectionManager().RestoreSiteCollectionAsync(site.Url);
 }
 </code></pre>
+<h2 id="deleting-a-recycled-site-collection">Deleting a recycled site collection</h2>
+<div class="IMPORTANT">
+<h5>Important</h5>
+<p>You need to be either a SharePoint Administrator or Global Administrator to use these methods.</p>
+</div>
+
+<div class="NOTE">
+<h5>Note</h5>
+<p>When the site collection being deleted from the recycle bin has an associated Microsoft 365 group it's recommended to not use this approach but rather permanently delete the Microsoft 365 group which will then delete all the resources linked to the Microsoft 365 group.</p>
+</div>
+<p>A recycled site collection can be permanently deleted using the <code>DeleteRecycledSiteCollection</code> methods:</p>
+<pre><code class="lang-csharp">var recycledSites = await context.GetSiteCollectionManager().GetRecycledSiteCollectionsAsync();
+foreach(var site in recycledSites)
+{
+    // delete all non group connected recycled site collections
+    if (site.GroupId == Guid.Empty)
+    {
+        await context.GetSiteCollectionManager().DeleteRecycledSiteCollectionAsync(site.Url);
+    }
+}
+</code></pre>
 <h2 id="deleting-site-collections">Deleting site collections</h2>
 <div class="IMPORTANT">
 <h5>Important</h5>
 <p>You need to be either a SharePoint Administrator or Global Administrator to use these methods.</p>
 </div>
 
-<p>A site collection can also deleted via one of the <code>DeleteSiteCollection</code> methods.</p>
+<p>A site collection can also be permanently deleted via one of the <code>DeleteSiteCollection</code> methods. This method first moves the site collection to the recycled bin and then immediately purges the site collection from the recycle bin.</p>
 <div class="NOTE">
 <h5>Note</h5>
 <p>A group connected site will not be permanently deleted, calling the <code>DeleteSiteCollection</code> methods will recycle the site collection and group.</p>
@@ -368,5 +441,7 @@ foreach(var site in recycledSites)
     
     <script type="text/javascript" src="../styles/docfx.vendor.js"></script>
     <script type="text/javascript" src="../styles/docfx.js"></script>
-    <script type="text/javascript" src="../styles/main.js"></script>  </body>
+    <script type="text/javascript" src="../styles/main.js"></script>    
+    <img src="https://m365-visitor-stats.azurewebsites.net/pnpcoresdk/docs">
+  </body>
 </html>

@@ -8,7 +8,7 @@
     <title>Working with list views | PnP Core SDK </title>
     <meta name="viewport" content="width=device-width">
     <meta name="title" content="Working with list views | PnP Core SDK ">
-    <meta name="generator" content="docfx 2.56.5.0">
+    <meta name="generator" content="docfx 2.59.2.0">
     <meta name="description" content="The PnP Core SDK is a modern .NET SDK designed to work for Microsoft 365. It provides a unified object model for working with SharePoint Online and Teams which is agnostic to the underlying API's being called.">
     <link rel="shortcut icon" href="https://c.s-microsoft.com/favicon.ico?v2">
     <link rel="stylesheet" href="../styles/docfx.vendor.css">
@@ -78,7 +78,7 @@
           <div class="col-md-10">
             <article class="content wrap" id="_content" data-uid="">
                   <div class="contribution-panel mobile-hide pull-right">
-                      <a href="https://github.com/pnp/pnpcore/blob/dev/docs/using-the-sdk/lists-views.md/#L1" title="Improve this Doc" class="improve-doc-lg"><i class="glyphicon glyphicon-pencil"></i></a>
+                      <a href="https://github.com/gautamdsheth/pnpcore/blob/dev/docs/using-the-sdk/lists-views.md/#L1" title="Improve this Doc" class="improve-doc-lg"><i class="glyphicon glyphicon-pencil"></i></a>
                   </div>
                     <h1 id="working-with-list-views">Working with list views</h1>
 
@@ -135,6 +135,49 @@ var viewToDelete = myList.Views.AsRequested().FirstOrDefault(p =&gt; p.Title == 
 
 await viewToDelete.DeleteAsync();
 </code></pre>
+<h2 id="adding-a-field-to-an-existing-view">Adding a field to an existing view</h2>
+<p>You can add a new field to an existing view using one of the <code>AddViewField</code> methods and supplying the field using it's internal name.</p>
+<pre><code class="lang-csharp">var myList = await context.Web.Lists.GetByTitleAsync(&quot;Documents&quot;, p =&gt; p.Views);
+
+var myView = myList.Views.Add(new ViewOptions()
+                                {
+                                    Title = &quot;My custom view&quot;,
+                                    RowLimit = 10,
+                                    Query = &quot;&lt;Where&gt;&lt;Eq&gt;&lt;FieldRef Name='LinkFilename' /&gt;&lt;Value Type='Text'&gt;General&lt;/Value&gt;&lt;/Eq&gt;&lt;/Where&gt;&quot;,
+                                    ViewFields = new string[] { &quot;DocIcon&quot;, &quot;LinkFilenameNoMenu&quot; }
+                                });
+// Add the &quot;Modified&quot; field
+await myView.AddViewFieldAsync(&quot;Modified&quot;);                                
+</code></pre>
+<h2 id="removing-a-field-from-an-existing-view">Removing a field from an existing view</h2>
+<p>You can remove a field from an existing view using one of the <code>RemoveViewField</code> methods and supplying the field using it's internal name.</p>
+<pre><code class="lang-csharp">var myList = await context.Web.Lists.GetByTitleAsync(&quot;Documents&quot;, p =&gt; p.Views);
+
+var myView = myList.Views.Add(new ViewOptions()
+                                {
+                                    Title = &quot;My custom view&quot;,
+                                    RowLimit = 10,
+                                    Query = &quot;&lt;Where&gt;&lt;Eq&gt;&lt;FieldRef Name='LinkFilename' /&gt;&lt;Value Type='Text'&gt;General&lt;/Value&gt;&lt;/Eq&gt;&lt;/Where&gt;&quot;,
+                                    ViewFields = new string[] { &quot;DocIcon&quot;, &quot;LinkFilenameNoMenu&quot;, &quot;Modified&quot; }
+                                });
+// Removes the &quot;Modified&quot; field from the view
+await myView.RemoveViewFieldAsync(&quot;Modified&quot;);                                
+</code></pre>
+<h2 id="re-ordering-a-field-in-an-existing-view">Re-ordering a field in an existing view</h2>
+<p>A field in a view can be moved to a new position using one of the <code>MoveViewFieldTo</code> methods.</p>
+<pre><code class="lang-csharp">var myList = await context.Web.Lists.GetByTitleAsync(&quot;Documents&quot;, p =&gt; p.Views);
+
+var myView = myList.Views.Add(new ViewOptions()
+                                {
+                                    Title = &quot;My custom view&quot;,
+                                    RowLimit = 10,
+                                    Query = &quot;&lt;Where&gt;&lt;Eq&gt;&lt;FieldRef Name='LinkFilename' /&gt;&lt;Value Type='Text'&gt;General&lt;/Value&gt;&lt;/Eq&gt;&lt;/Where&gt;&quot;,
+                                    ViewFields = new string[] { &quot;DocIcon&quot;, &quot;LinkFilenameNoMenu&quot;, &quot;Modified&quot; }
+                                });
+
+// Moves the &quot;Modified&quot; field to be the first field in the view
+await myView.MoveViewFieldToAsync(&quot;Modified&quot;, 0);                               
+</code></pre>
 </article>
           </div>
           <div class="hidden-sm col-md-2" role="complementary">
@@ -161,5 +204,7 @@ await viewToDelete.DeleteAsync();
     
     <script type="text/javascript" src="../styles/docfx.vendor.js"></script>
     <script type="text/javascript" src="../styles/docfx.js"></script>
-    <script type="text/javascript" src="../styles/main.js"></script>  </body>
+    <script type="text/javascript" src="../styles/main.js"></script>    
+    <img src="https://m365-visitor-stats.azurewebsites.net/pnpcoresdk/docs">
+  </body>
 </html>

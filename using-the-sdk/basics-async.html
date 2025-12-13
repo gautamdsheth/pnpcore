@@ -8,7 +8,7 @@
     <title>Asynchronous versus synchronous | PnP Core SDK </title>
     <meta name="viewport" content="width=device-width">
     <meta name="title" content="Asynchronous versus synchronous | PnP Core SDK ">
-    <meta name="generator" content="docfx 2.56.5.0">
+    <meta name="generator" content="docfx 2.59.2.0">
     <meta name="description" content="The PnP Core SDK is a modern .NET SDK designed to work for Microsoft 365. It provides a unified object model for working with SharePoint Online and Teams which is agnostic to the underlying API's being called.">
     <link rel="shortcut icon" href="https://c.s-microsoft.com/favicon.ico?v2">
     <link rel="stylesheet" href="../styles/docfx.vendor.css">
@@ -78,7 +78,7 @@
           <div class="col-md-10">
             <article class="content wrap" id="_content" data-uid="">
                   <div class="contribution-panel mobile-hide pull-right">
-                      <a href="https://github.com/pnp/pnpcore/blob/dev/docs/using-the-sdk/basics-async.md/#L1" title="Improve this Doc" class="improve-doc-lg"><i class="glyphicon glyphicon-pencil"></i></a>
+                      <a href="https://github.com/gautamdsheth/pnpcore/blob/dev/docs/using-the-sdk/basics-async.md/#L1" title="Improve this Doc" class="improve-doc-lg"><i class="glyphicon glyphicon-pencil"></i></a>
                   </div>
                     <h1 id="asynchronous-versus-synchronous">Asynchronous versus synchronous</h1>
 
@@ -126,7 +126,7 @@
 <p>Internally in the PnP Core SDK everything always happens async, the sync methods you see are wrappers over their async counterparts with a <code>GetAwaiter().GetResult()</code> to force the code to wait for the outcome.</p>
 <div class="IMPORTANT">
 <h5>Important</h5>
-<p>Using the async methods is strongly recommended. Use the sync methods if you're using the PnP Core SDK in an already sync code base, if not use async.</p>
+<p>Using the async methods is strongly recommended. Use the sync methods only if you're using the PnP Core SDK in an already sync code base and async is not an option, if not use async. Using the sync methods can possibly lead to deadlocks when combined with applications using a <code>SynchronizationContext</code> like ASP.NET. If you see encounter deadlocks then wrapping the impacted code block in a <code>Task.Run(() =&gt; your code )</code> block should avoid the deadlock.</p>
 </div>
 <p>If you want to learn more about async programming checkout these resources:</p>
 <ul>
@@ -159,5 +159,7 @@
     
     <script type="text/javascript" src="../styles/docfx.vendor.js"></script>
     <script type="text/javascript" src="../styles/docfx.js"></script>
-    <script type="text/javascript" src="../styles/main.js"></script>  </body>
+    <script type="text/javascript" src="../styles/main.js"></script>    
+    <img src="https://m365-visitor-stats.azurewebsites.net/pnpcoresdk/docs">
+  </body>
 </html>

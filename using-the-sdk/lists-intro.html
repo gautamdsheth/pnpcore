@@ -8,7 +8,7 @@
     <title>Working with lists | PnP Core SDK </title>
     <meta name="viewport" content="width=device-width">
     <meta name="title" content="Working with lists | PnP Core SDK ">
-    <meta name="generator" content="docfx 2.56.5.0">
+    <meta name="generator" content="docfx 2.59.2.0">
     <meta name="description" content="The PnP Core SDK is a modern .NET SDK designed to work for Microsoft 365. It provides a unified object model for working with SharePoint Online and Teams which is agnostic to the underlying API's being called.">
     <link rel="shortcut icon" href="https://c.s-microsoft.com/favicon.ico?v2">
     <link rel="stylesheet" href="../styles/docfx.vendor.css">
@@ -78,7 +78,7 @@
           <div class="col-md-10">
             <article class="content wrap" id="_content" data-uid="">
                   <div class="contribution-panel mobile-hide pull-right">
-                      <a href="https://github.com/pnp/pnpcore/blob/dev/docs/using-the-sdk/lists-intro.md/#L1" title="Improve this Doc" class="improve-doc-lg"><i class="glyphicon glyphicon-pencil"></i></a>
+                      <a href="https://github.com/gautamdsheth/pnpcore/blob/dev/docs/using-the-sdk/lists-intro.md/#L1" title="Improve this Doc" class="improve-doc-lg"><i class="glyphicon glyphicon-pencil"></i></a>
                   </div>
                     <h1 id="working-with-lists">Working with lists</h1>
 
@@ -160,10 +160,10 @@ var myList = await context.Web.Lists.Where(p=&gt;p.Title == &quot;Documents&quot
 <h3 id="enumerating-lists">Enumerating lists</h3>
 <p>Loading all lists is needed when you don't upfront know which list you want to process, or maybe you want to run over all lists of a given type. Doing an enumeration can be done by requesting the <a href="https://pnp.github.io/pnpcore/api/PnP.Core.Model.SharePoint.IWeb.html#PnP_Core_Model_SharePoint_IWeb_Lists">Lists property</a> of an IWeb or via a LINQ query.</p>
 <pre><code class="lang-csharp">// Sample 1: Load all lists in the web with their default properties
-await context.Web.GetAsync(p =&gt; p.Lists);
+await context.Web.LoadAsync(p =&gt; p.Lists);
 
 // Sample 2: Load the web content types + all lists with their content types and the content type field links
-await context.Web.GetAsync(p =&gt; p.Title,
+await context.Web.LoadAsync(p =&gt; p.Title,
                            p =&gt; p.ContentTypes.QueryProperties(p =&gt; p.Name),
                            p =&gt; p.Lists.QueryProperties(p =&gt; p.Id,
                                                         p =&gt; p.TemplateType,
@@ -230,8 +230,78 @@ await myList.DeleteAsync();
 // Recycle the list
 await myList.RecycleAsync();
 </code></pre>
+<h2 id="configuring-default-values-for-a-list">Configuring default values for a list</h2>
+<div class="NOTE">
+<h5>Note</h5>
+<p>Setting default column values per folder only is supported for document libraries, not for lists.</p>
+</div>
+<h3 id="setting-default-values">Setting default values</h3>
+<p>A list contains fields and these fields can have a default value as part of the field definition. Another approach for setting default values is outlined below, using one of the <code>SetDefaultColumnValues</code> methods you can set a default value for one or more fields and this can be done per folder. In below sample you'll see that <code>Folder 1</code> will get another default then <code>Folder2</code>. Also note that taxonomy fields require a slightly different value setting: to specify a term you need to use &quot;-1;#TermLabel|TermId&quot;, if you're setting a multi value taxonomy field and you want to specify multiple terms as default value use &quot;-1;#Term1Label|Term1Id;#-1;#Term2Label|Term2Id&quot;.</p>
+<div class="NOTE">
+<h5>Note</h5>
+<p>It's important you specify a folder relative path (e.g. <code>/Folder 1</code>) and not a server relative folder path (e.g. <code>/sites/myteamsite/mylibrary/Folder 1</code>).</p>
+</div>
+<pre><code class="lang-csharp">var myList = await context.Web.Lists.GetByTitleAsync(&quot;List to work with&quot;);
+
+// Set default values on these folders
+List&lt;DefaultColumnValueOptions&gt; defaultColumnValues = new()
+{
+    new DefaultColumnValueOptions
+    {
+        FolderRelativePath = &quot;/Folder 1&quot;,
+        FieldInternalName = &quot;MyField&quot;,
+        DefaultValue = &quot;F1&quot;
+    },
+    new DefaultColumnValueOptions
+    {
+        FolderRelativePath = &quot;/Folder2&quot;,
+        FieldInternalName = &quot;MyField&quot;,
+        DefaultValue = &quot;F2&quot;
+    },
+    // Taxonomy fields require a specific model for setting the default value 
+    new DefaultColumnValueOptions
+    {
+        FolderRelativePath =&quot;/Folder 1&quot;,
+        FieldInternalName = &quot;TaxonomyField&quot;,
+        DefaultValue = $&quot;-1;#{term.Labels.First().Name}|{term.Id}&quot;
+    }
+};
+
+// Set the default values for a list
+await myList.SetDefaultColumnValuesAsync(defaultColumnValues);
+</code></pre>
+<h3 id="getting-the-set-default-values">Getting the set default values</h3>
+<p>To get the set default values you can use one of the <code>GetDefaultColumnValues</code> methods:</p>
+<pre><code class="lang-csharp">var myList = await context.Web.Lists.GetByTitleAsync(&quot;List to work with&quot;);
+
+// Load the default values
+var loadedDefaults = await myList.GetDefaultColumnValuesAsync();
+
+foreach(var addedValue in defaultColumnValues)
+{
+    // Do something with the retrieved value
+}
+</code></pre>
+<h3 id="updating-the-set-default-values">Updating the set default values</h3>
+<p>If you want to update existing default values then first get the existing values using one of the <code>GetDefaultColumnValues</code> methods, update the returned list of <code>DefaultColumnValueOptions</code> instances and then persist them again via one of the <code>SetDefaultColumnValues</code> methods.</p>
+<h3 id="clearing-the-set-default-values">Clearing the set default values</h3>
+<p>Clearing all the set default values can be done using the <code>ClearDefaultColumnValues</code> methods:</p>
+<pre><code class="lang-csharp">var myList = await context.Web.Lists.GetByTitleAsync(&quot;List to work with&quot;);
+
+// Clear the defaults
+await myList.ClearDefaultColumnValuesAsync();
+</code></pre>
+<h2 id="sharing-libraries">Sharing libraries</h2>
+<p>A document library can be shared with your organization, with specific users or with everyone (anonymous), obviously all depending on how the sharing configuration of your tenant and site collection. Check out the <a href="sharing-intro.html">PnP Core SDK Sharing APIs</a> to learn more on how you can share a document library via sharing it's <code>RootFolder</code>.</p>
 <h2 id="getting-changes-for-a-list">Getting changes for a list</h2>
 <p>You can use the <code>GetChanges</code> methods on an <code>IList</code> to list all the changes. See <a href="changes-sharepoint.html">Enumerating changes that happened in SharePoint</a> to learn more.</p>
+<h2 id="re-indexing-a-list">Re-indexing a list</h2>
+<p>SharePoint will index list content automatically, unless the list <code>NoCrawl</code> property is set to <code>true</code>. Typically re-indexing is not needed, but whenever you <a href="https://docs.microsoft.com/en-us/sharepoint/crawl-site-content">make changes to the search schema (managed and crawled property settings) these will not be automatically picked up, thus requiring a re-indexing of the list or complete site</a>. Re-indexing of a list is done using the <code>ReIndex</code> methods:</p>
+<pre><code class="lang-csharp">var myList = await context.Web.Lists.GetByTitleAsync(&quot;List to work with&quot;);
+
+// Reindex the list 
+await myList.ReIndexAsync();
+</code></pre>
 </article>
           </div>
           <div class="hidden-sm col-md-2" role="complementary">
@@ -258,5 +328,7 @@ await myList.RecycleAsync();
     
     <script type="text/javascript" src="../styles/docfx.vendor.js"></script>
     <script type="text/javascript" src="../styles/docfx.js"></script>
-    <script type="text/javascript" src="../styles/main.js"></script>  </body>
+    <script type="text/javascript" src="../styles/main.js"></script>    
+    <img src="https://m365-visitor-stats.azurewebsites.net/pnpcoresdk/docs">
+  </body>
 </html>

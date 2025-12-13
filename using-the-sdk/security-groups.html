@@ -8,7 +8,7 @@
     <title>Working with groups | PnP Core SDK </title>
     <meta name="viewport" content="width=device-width">
     <meta name="title" content="Working with groups | PnP Core SDK ">
-    <meta name="generator" content="docfx 2.56.5.0">
+    <meta name="generator" content="docfx 2.59.2.0">
     <meta name="description" content="The PnP Core SDK is a modern .NET SDK designed to work for Microsoft 365. It provides a unified object model for working with SharePoint Online and Teams which is agnostic to the underlying API's being called.">
     <link rel="shortcut icon" href="https://c.s-microsoft.com/favicon.ico?v2">
     <link rel="stylesheet" href="../styles/docfx.vendor.css">
@@ -78,7 +78,7 @@
           <div class="col-md-10">
             <article class="content wrap" id="_content" data-uid="">
                   <div class="contribution-panel mobile-hide pull-right">
-                      <a href="https://github.com/pnp/pnpcore/blob/dev/docs/using-the-sdk/security-groups.md/#L1" title="Improve this Doc" class="improve-doc-lg"><i class="glyphicon glyphicon-pencil"></i></a>
+                      <a href="https://github.com/gautamdsheth/pnpcore/blob/dev/docs/using-the-sdk/security-groups.md/#L1" title="Improve this Doc" class="improve-doc-lg"><i class="glyphicon glyphicon-pencil"></i></a>
                   </div>
                     <h1 id="working-with-groups">Working with groups</h1>
 
@@ -110,7 +110,7 @@ foreach(var group in context.Web.SiteGroups.AsRequested())
 }
 </code></pre>
 <h3 id="adding-a-group-with-a-custom-role-definition">Adding a group with a custom role definition</h3>
-<p>Adding a new SharePoint group is done via the usual <code>Add</code> methods. When a group is added you also need to assign a role to it (see <a href="security-intro.html#configuring-roles">Configuring roles</a>) otherwise the users added to group will not have any permissions on the SharePoint site.</p>
+<p>Adding a new SharePoint group is done via the usual <code>Add</code> methods. When a group is added you also need to assign a role to it (see <a href="security-intro.html#configuring-roles">Configuring roles</a>) otherwise the users added to group will not have any permissions on the SharePoint site. The <code>AddRoleDefinitions</code> methods are equivalent to using the methods provided via the <code>ISecurableObject</code> interface on <code>IWeb</code>.</p>
 <pre><code class="lang-csharp">// Add a new role definition for our new group, a limited reader role
 var roleDefinition = await context.Web.RoleDefinitions.AddAsync(roleDefName, Model.SharePoint.RoleType.Reader, new Model.SharePoint.PermissionKind[] { Model.SharePoint.PermissionKind.Open });
 
@@ -124,7 +124,7 @@ await siteGroup.AddRoleDefinitionsAsync(roleDefinition.Name);
 <p>To update a group you first change the needed properties and then call one of the <code>Update</code> methods.</p>
 <div class="NOTE">
 <h5>Note</h5>
-<p>As a group's description cannot contain html characters the provided html is turned into text automatically. Also is the description length automatically truncated at 511 characters.</p>
+<p>As a group's description cannot contain html characters the provided html is turned into text automatically. Also is the description length automatically truncated at 511 characters. Futhermore updating a group's description will not show this description in the group's &quot;About Me&quot;, for that you need to update the group's row in the User Information List as shown in the sample code.</p>
 </div>
 <pre><code class="lang-csharp">// First get the group to update
 var siteGroup = await context.Web.SiteGroups.FirstOrDefaultAsync(g =&gt; g.Title == &quot;Limited readers&quot;);
@@ -132,6 +132,12 @@ var siteGroup = await context.Web.SiteGroups.FirstOrDefaultAsync(g =&gt; g.Title
 // Update the group, e.g. the Description property
 siteGroup.Description = &quot;Group for users with limited read access to this site&quot;;
 await siteGroup.UpdateAsync();
+
+// Update &quot;About Me&quot; in group overview page requires updating the group row in the user information list
+await context.Web.EnsurePropertiesAsync(p =&gt; p.SiteUserInfoList);
+var item = await context.Web.SiteUserInfoList.Items.GetByIdAsync(siteGroup.Id);
+item[&quot;Notes&quot;] = &quot;This is my custom description&quot;;
+await item.UpdateAsync();
 </code></pre>
 <h3 id="deleting-a-group">Deleting a group</h3>
 <p>To delete a group use one of the <code>Delete</code> methods.</p>
@@ -142,13 +148,17 @@ var siteGroup = await context.Web.SiteGroups.FirstOrDefaultAsync(g =&gt; g.Title
 await siteGroup.DeleteAsync();
 </code></pre>
 <h3 id="adding-usersgroups-to-a-group">Adding users/groups to a group</h3>
-<p>Once a group has been created adding users or other groups is a common task which can be done using one of the <code>AddUser</code> methods.</p>
+<p>Once a group has been created adding users or other groups is a common task which can be done using one of the <code>AddUser</code> methods. Note that you can also add special user accounts representing &quot;Everyone&quot;, Azure AD security groups or Microsoft 365 Groups by specifying the correct login name. The <a href="security-users.html">User</a> page will provide more details on this.</p>
 <pre><code class="lang-csharp">// First get the group to add users to
 var siteGroup = await context.Web.SiteGroups.FirstOrDefaultAsync(g =&gt; g.Title == &quot;Limited readers&quot;);
 // Get the user to add
 var currentUser = await context.Web.GetCurrentUserAsync();
-// Add the user
-await addedGroup.AddUserAsync(currentUser.LoginName);
+
+// Add the user: Option A
+await siteGroup.Users.AddAsync(currentUser.LoginName)
+
+// Add the user: Option B
+await siteGroup.AddUserAsync(currentUser.LoginName);
 </code></pre>
 <h3 id="listing-the-users-in-a-group">Listing the users in a group</h3>
 <p>To query the users in a group you need to load/get the <code>Users</code> property of the group.</p>
@@ -166,11 +176,38 @@ foreach(var user in myGroup.Users.AsRequested())
 var siteGroup = await context.Web.SiteGroups.FirstOrDefaultAsync(g =&gt; g.Title == &quot;Limited readers&quot;);
 // Get the user to remove
 var currentUser = await context.Web.GetCurrentUserAsync();
-// Remove the user
-await addedGroup.RemoveUserAsync(currentUser.Id);
+
+// Remove the user: Option A
+await siteGroup.Users.AsRequested().FirstOrDefault(p =&gt; p.LoginName == currentUser.LoginName).DeleteAsync();
+
+// Remove the user: Option B
+await siteGroup.RemoveUserAsync(currentUser.Id);
+</code></pre>
+<h3 id="setting-the-owner-of-a-group">Setting the owner of a group</h3>
+<p>If you provision groups you might want to set a user as owner of the group. For that you can use one of the `` methods:</p>
+<pre><code class="lang-csharp">// First get the group to set the owner for
+var siteGroup = await context.Web.SiteGroups.FirstOrDefaultAsync(g =&gt; g.Title == &quot;Limited readers&quot;);
+
+// Get a user to set as owner, here we just take the first user defined in the site
+var siteUser = await context.Web.SiteUsers.FirstOrDefaultAsync(p =&gt; p.PrincipalType == PrincipalType.User);
+
+// Set the group owner
+await siteGroup.SetUserAsOwnerAsync(siteUser.Id);
 </code></pre>
 <h2 id="microsoft-365-groups">Microsoft 365 groups</h2>
+<div class="NOTE">
+<h5>Note</h5>
+<p>This only works for Teams site with group. Otherwise it will return an exception.</p>
+</div>
 <p>When a site is connected to a Microsoft 365 group then the Microsoft 365 group's owners are also site collection administrators and are part of the site's default &quot;Owners&quot; SharePoint group. The Microsoft's 365 group members will be automatically part of the site's default &quot;Members&quot; SharePoint group. Important to understand is that the Microsoft 365 group's owners and members complement the existing SharePoint security model, meaning it's perfectly possible to define add a SharePoint group with members in a Microsoft 365 group connected site (e.g. a team site). Important to understand is the permissions set of the SharePoint site via SharePoint groups do not apply to the Microsoft 365 group and it's other connected resources (e.g. a mailbox, Yammer group etc). Go <a href="https://docs.microsoft.com/en-us/sharepoint/dev/transform/modernize-connect-to-office365-group">here</a> to learn more.</p>
+<h3 id="getting-the-group">Getting the group</h3>
+<p>To get the group on a context you query the <code>Group</code> property which return a model of <code>IGraphGroup</code> instances.</p>
+<pre><code class="lang-csharp">// To get all properties
+var group = await context.Group.GetAsync();
+
+// To only return the Id property
+var group = await context.Group.GetAsync(x =&gt; x.Id);
+</code></pre>
 </article>
           </div>
           <div class="hidden-sm col-md-2" role="complementary">
@@ -197,5 +234,7 @@ await addedGroup.RemoveUserAsync(currentUser.Id);
     
     <script type="text/javascript" src="../styles/docfx.vendor.js"></script>
     <script type="text/javascript" src="../styles/docfx.js"></script>
-    <script type="text/javascript" src="../styles/main.js"></script>  </body>
+    <script type="text/javascript" src="../styles/main.js"></script>    
+    <img src="https://m365-visitor-stats.azurewebsites.net/pnpcoresdk/docs">
+  </body>
 </html>

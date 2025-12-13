@@ -1,0 +1,418 @@
+﻿<!DOCTYPE html>
+<!--[if IE]><![endif]-->
+<html lang="en">
+  
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    <title>Working with a Team Channel Chat message reply | PnP Core SDK </title>
+    <meta name="viewport" content="width=device-width">
+    <meta name="title" content="Working with a Team Channel Chat message reply | PnP Core SDK ">
+    <meta name="generator" content="docfx 2.59.2.0">
+    <meta name="description" content="The PnP Core SDK is a modern .NET SDK designed to work for Microsoft 365. It provides a unified object model for working with SharePoint Online and Teams which is agnostic to the underlying API's being called.">
+    <link rel="shortcut icon" href="https://c.s-microsoft.com/favicon.ico?v2">
+    <link rel="stylesheet" href="../styles/docfx.vendor.css">
+    <link rel="stylesheet" href="../styles/docfx.css">
+    <link rel="stylesheet" href="../styles/main.css">
+    <link href="https://fonts.googleapis.com/css?family=Roboto" rel="stylesheet"> 
+    <meta property="docfx:navrel" content="../toc.html">
+    <meta property="docfx:tocrel" content="toc.html">
+    
+    <meta property="docfx:rel" content="../">
+    <meta property="docfx:newtab" content="true">
+  </head>  <body data-spy="scroll" data-target="#affix" data-offset="120">
+    <div id="wrapper">
+      <header>
+        
+        <nav id="autocollapse" class="navbar navbar-inverse ng-scope" role="navigation">
+          <div class="container">
+            <div class="navbar-header">
+              <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#navbar">
+                <span class="sr-only">Toggle navigation</span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+              </button>
+              
+              <a class="navbar-brand" href="../index.html">
+                <img id="logo" class="svg" src="../images/logo.svg" alt="">
+              </a>
+            </div>
+            <div class="collapse navbar-collapse" id="navbar">
+              <form class="navbar-form navbar-right" role="search" id="search">
+                <div class="form-group">
+                  <label class="glyphicon glyphicon-search" for="search-query"></label>
+                  <input type="text" class="form-control" id="search-query" placeholder="Search" autocomplete="off">
+                </div>
+              </form>
+            </div>
+          </div>
+        </nav>        
+        <div class="subnav navbar navbar-default">
+          <div class="container hide-when-search" id="breadcrumb">
+            <ul class="breadcrumb">
+              <li></li>
+            </ul>
+          </div>
+        </div>
+      </header>
+      <div class="container body-content">
+        
+        <div id="search-results">
+          <div class="search-list">Search Results for <span></span></div>
+          <div class="sr-items">
+            <p><i class="glyphicon glyphicon-refresh index-loading"></i></p>
+          </div>
+          <ul id="pagination" data-first="First" data-prev="Previous" data-next="Next" data-last="Last"></ul>
+        </div>
+      </div>
+      <div role="main" class="container body-content hide-when-search">
+        
+        <div class="sidenav hide-when-search">
+          <a class="btn toc-toggle collapse" data-toggle="collapse" href="#sidetoggle" aria-expanded="false" aria-controls="sidetoggle">Show / Hide Table of Contents</a>
+          <div class="sidetoggle collapse" id="sidetoggle">
+            <div id="sidetoc"></div>
+          </div>
+        </div>
+        <div class="article row grid-right">
+          <div class="col-md-10">
+            <article class="content wrap" id="_content" data-uid="">
+                  <div class="contribution-panel mobile-hide pull-right">
+                      <a href="https://github.com/gautamdsheth/pnpcore/blob/dev/docs/using-the-sdk/teams-channel-chat-reply.md/#L1" title="Improve this Doc" class="improve-doc-lg"><i class="glyphicon glyphicon-pencil"></i></a>
+                  </div>
+                    <h1 id="working-with-a-team-channel-chat-message-reply">Working with a Team Channel Chat message reply</h1>
+
+<p>The Core SDK provides support for working with chat messages within a Teams Channel allowing you to post messages. It is possible using the PnP Core SDK to then reply on these messages.</p>
+<h2 id="creating-context">Creating Context</h2>
+<p>In this article, you'll see a lot of <code>context</code> use: in this case this is a <code>PnPContext</code> which was obtained via the <code>PnPContextFactory</code> as explained in the <a href="readme.html">overview article</a> and show below:</p>
+<pre><code class="lang-csharp">using (var context = await pnpContextFactory.CreateAsync(&quot;SiteToWorkWith&quot;))
+{
+    // See next chapter on how to use the PnPContext for working with Teams
+}
+</code></pre>
+<h2 id="getting-chat-message-replies">Getting Chat Message replies</h2>
+<p>The following example will show you how to retrieve all the replies of a message within a channel chat:</p>
+<pre><code class="lang-csharp">// Get the Team
+var team = await context.Team.GetAsync(o =&gt; o.Channels);
+
+// Get the channel               
+var channel = team.Channels.AsRequested().FirstOrDefault(i =&gt; i.DisplayName == &quot;General&quot;);
+
+channel = await channel.GetAsync(o =&gt; o.Messages);
+var chatMessage = channel.Messages.AsRequested().FirstOrDefault();
+
+// Load the replies
+chatMessage = await chatMessage.GetAsync(o =&gt; o.Replies);
+
+// Get the replies
+var replies = chatMessage.Replies;
+
+</code></pre>
+<h2 id="adding-chat-message-replies">Adding Chat Message Replies</h2>
+<p>You can post replies to a message within a channel, the following code demonstrates how this can be done:</p>
+<pre><code class="lang-csharp">// Get the Team
+var team = await context.Team.GetAsync(o =&gt; o.Channels);
+
+// Get the channel
+var channel = team.Channels.AsRequested().FirstOrDefault(i =&gt; i.DisplayName == &quot;General&quot;);
+
+channel = await channel.GetAsync(o =&gt; o.Messages);
+var chatMessages = channel.Messages;
+
+// Get the chat message to add a reply to
+var chatMessageToAddReply = chatMessages.AsRequested().FirstOrDefault();
+
+// Define the body of the reply
+var body = &quot;Hello, I'm posting a reply - PnP Rocks!&quot;;
+
+// Perform the add operation
+await chatMessageToAddReply.AddReplyAsync(body);
+
+</code></pre>
+<h2 id="add-chat-message-replies-with-html">Add Chat Message Replies with HTML</h2>
+<p>You can add chat replies that contain a HTML body, the following code sample will demonstrate how to do this:</p>
+<pre><code class="lang-csharp">// Get the Team
+var team = await context.Team.GetAsync(o =&gt; o.Channels);
+
+// Get the channel
+var channel = team.Channels.AsRequested().FirstOrDefault(i =&gt; i.DisplayName == &quot;General&quot;);
+
+channel = await channel.GetAsync(o =&gt; o.Messages);
+var chatMessages = channel.Messages;
+
+// Get the chat message to add a reply to
+var chatMessageToAddReply = chatMessages.AsRequested().FirstOrDefault();
+
+// Define the body of the reply
+var body = $&quot;&lt;h1&gt;Hello&lt;/h1&gt;&lt;br /&gt;Example posting a HTML message - &lt;strong&gt;PnP Rocks!&lt;/strong&gt;&quot;;
+
+// Perform the add operation
+await chatMessageToAddReply.AddReplyAsync(body, ChatMessageContentType.Html);
+                
+</code></pre>
+<h2 id="adding-chat-messages-with-attachments">Adding Chat Messages with Attachments</h2>
+<p>Chat message replies can support file attachments.</p>
+<p>The following code shows an example of how an attachment is done:</p>
+<pre><code class="lang-csharp">// Get the Team
+var team = await context.Team.GetAsync(o =&gt; o.Channels);
+
+// Get the channel
+var channel = team.Channels.AsRequested().FirstOrDefault(i =&gt; i.DisplayName == &quot;General&quot;);
+
+channel = await channel.GetAsync(o =&gt; o.Messages);
+var chatMessages = channel.Messages;
+
+// Get the chat message to add a reply to
+var chatMessageToAddReply = chatMessages.AsRequested().FirstOrDefault();
+
+// Upload File to SharePoint Library
+IFolder folder = await context.Web.Lists.GetByTitle(&quot;Documents&quot;).RootFolder.GetAsync();
+IFile existingFile = await folder.Files.GetFirstOrDefaultAsync(o =&gt; o.Name == &quot;test_added.docx&quot;);
+if(existingFile == default)
+{
+    existingFile = await folder.Files.AddAsync(&quot;test_added.docx&quot;, System.IO.File.OpenRead($&quot;&lt;path-to-file&gt;test.docx&quot;));
+}
+
+// Prepare the attachment ID
+var attachmentId = existingFile.ETag.AsGraphEtag(); ; // Needs to be the documents eTag - just the GUID part - use this extension method
+
+var body = $&quot;&lt;h1&gt;Hello&lt;/h1&gt;&lt;br /&gt;Example posting a message with a file attachment - &lt;attachment id=\&quot;{attachmentId}\&quot;&gt;&lt;/attachment&gt;&quot;;
+
+var fileUri = new Uri(existingFile.LinkingUrl);
+
+await chatMessageToAddReply.AddReplyAsync(new ChatMessageOptions{
+    Content = body,
+    ContentType = ChatMessageContentType.Html,
+    Attachments = {
+        new ChatMessageAttachmentOptions
+        {
+            Id = attachmentId,
+            ContentType = &quot;reference&quot;,
+            // Cannot have the extension with a query graph doesn't recognise and think its part of file extension - include in docs.
+            ContentUrl = new Uri(fileUri.ToString().Replace(fileUri.Query, &quot;&quot;)),
+            Name = $&quot;{existingFile.Name}&quot;,
+            ThumbnailUrl = null,
+            Content = null
+        }
+    }
+});
+
+</code></pre>
+<div class="NOTE">
+<h5>Note</h5>
+<p>There two areas you should be aware about this feature related to how the Graph works:</p>
+<ul>
+<li>The Graph produces a eTag reference in the format &quot;{GUID},ID&quot; with quotes, however this has to be stripped down to just the GUID element, without the surrounding braces, comma, quotes and ID for this to be recognised. An extension method has been created to avoid having to write this adaption to the eTag.</li>
+<li>File used to upload, must not have a query string parameter, this will not be recognised and the Graph treats this as part of the extension and thus will fail if the Name extension is different.</li>
+</ul>
+</div>
+<h2 id="adding-chat-message-reply-with-cards">Adding Chat Message reply with Cards</h2>
+<p>Adding a chat message reply can be done using a Card, see below adaptive card example:</p>
+<pre><code class="lang-csharp">// Get the Team
+var team = await context.Team.GetAsync(o =&gt; o.Channels);
+
+// Get the channel
+var channel = team.Channels.AsRequested().FirstOrDefault(i =&gt; i.DisplayName == &quot;General&quot;);
+
+channel = await channel.GetAsync(o =&gt; o.Messages);
+var chatMessages = channel.Messages;
+
+// Get the chat message to add a reply to
+var chatMessageToAddReply = chatMessages.AsRequested().FirstOrDefault();
+
+// Attachment ID must be unique, but the same in both body and content properties
+var attachmentId = &quot;74d20c7f34aa4a7fb74e2b30004247c5&quot;;
+var body = $&quot;&lt;attachment id=\&quot;{attachmentId}\&quot;&gt;&lt;/attachment&gt;&quot;;
+
+await chatMessageToAddReply.AddReplyAsync(new ChatMessageOptions
+{
+    Content = body,
+    ContentType = ChatMessageContentType.Html,
+    Attachments = {
+        new ChatMessageAttachmentOptions
+        {
+            Id = attachmentId,
+            ContentType = &quot;application/vnd.microsoft.card.adaptive&quot;,
+            // Adaptive Card
+            Content = &quot;{\&quot;$schema\&quot;:\&quot;http://adaptivecards.io/schemas/adaptive-card.json\&quot;,\&quot;type\&quot;:\&quot;AdaptiveCard\&quot;,\&quot;version\&quot;:\&quot;1.0\&quot;,\&quot;body\&quot;:[{\&quot;type\&quot;:\&quot;Container\&quot;,\&quot;items\&quot;:[{\&quot;type\&quot;:\&quot;TextBlock\&quot;,\&quot;text\&quot;:\&quot;Adaptive Card Unit Test\&quot;,\&quot;weight\&quot;:\&quot;bolder\&quot;,\&quot;size\&quot;:\&quot;medium\&quot;},{\&quot;type\&quot;:\&quot;ColumnSet\&quot;,\&quot;columns\&quot;:[{\&quot;type\&quot;:\&quot;Column\&quot;,\&quot;width\&quot;:\&quot;auto\&quot;,\&quot;items\&quot;:[{\&quot;type\&quot;:\&quot;Image\&quot;,\&quot;url\&quot;:\&quot;https://pbs.twimg.com/profile_images/3647943215/d7f12830b3c17a5a9e4afcc370e3a37e_400x400.jpeg\&quot;,\&quot;size\&quot;:\&quot;small\&quot;,\&quot;style\&quot;:\&quot;person\&quot;}]},{\&quot;type\&quot;:\&quot;Column\&quot;,\&quot;width\&quot;:\&quot;stretch\&quot;,\&quot;items\&quot;:[{\&quot;type\&quot;:\&quot;TextBlock\&quot;,\&quot;text\&quot;:\&quot;Matt Hidinger\&quot;,\&quot;weight\&quot;:\&quot;bolder\&quot;,\&quot;wrap\&quot;:true},{\&quot;type\&quot;:\&quot;TextBlock\&quot;,\&quot;spacing\&quot;:\&quot;none\&quot;,\&quot;text\&quot;:\&quot;Created {{DATE(2017-02-14T06:08:39Z,SHORT)}}\&quot;,\&quot;isSubtle\&quot;:true,\&quot;wrap\&quot;:true}]}]}]},{\&quot;type\&quot;:\&quot;Container\&quot;,\&quot;items\&quot;:[{\&quot;type\&quot;:\&quot;TextBlock\&quot;,\&quot;text\&quot;:\&quot;Now that we have defined the main rule sand features of the format ,we need to produce a schema and publish it to GitHub.The schema will be the starting point of our reference documentation.\&quot;,\&quot;wrap\&quot;:true},{\&quot;type\&quot;:\&quot;FactSet\&quot;,\&quot;facts\&quot;:[{\&quot;title\&quot;:\&quot;Board:\&quot;,\&quot;value\&quot;:\&quot;Adaptive Card\&quot;},{\&quot;title\&quot;:\&quot;List:\&quot;,\&quot;value\&quot;:\&quot;Backlog\&quot;},{\&quot;title\&quot;:\&quot;Assigned to:\&quot;,\&quot;value\&quot;:\&quot;Matt Hidinger\&quot;},{\&quot;title\&quot;:\&quot;Duedate:\&quot;,\&quot;value\&quot;:\&quot;Not set\&quot;}]}]}],\&quot;actions\&quot;:[{\&quot;type\&quot;:\&quot;Action.ShowCard\&quot;,\&quot;title\&quot;:\&quot;Set due date\&quot;,\&quot;card\&quot;:{\&quot;type\&quot;:\&quot;AdaptiveCard\&quot;,\&quot;body\&quot;:[{\&quot;type\&quot;:\&quot;Input.Date\&quot;,\&quot;id\&quot;:\&quot;dueDate\&quot;}],\&quot;actions\&quot;:[{\&quot;type\&quot;:\&quot;Action.Submit\&quot;,\&quot;title\&quot;:\&quot;OK\&quot;}]}},{\&quot;type\&quot;:\&quot;Action.ShowCard\&quot;,\&quot;title\&quot;:\&quot;Comment\&quot;,\&quot;card\&quot;:{\&quot;type\&quot;:\&quot;AdaptiveCard\&quot;,\&quot;body\&quot;:[{\&quot;type\&quot;:\&quot;Input.Text\&quot;,\&quot;id\&quot;:\&quot;comment\&quot;,\&quot;isMultiline\&quot;:true,\&quot;placeholder\&quot;:\&quot;Enter your comment\&quot;}],\&quot;actions\&quot;:[{\&quot;type\&quot;:\&quot;Action.Submit\&quot;,\&quot;title\&quot;:\&quot;OK\&quot;}]}}]}&quot;,
+            ContentUrl = null,
+            Name = null,
+            ThumbnailUrl = null
+        }
+    }
+});
+
+</code></pre>
+<h2 id="adding-chat-message-reply-with-inline-images">Adding Chat Message reply with Inline Images</h2>
+<p>Chat message replies can also include inline images. The following example demonstrates this option:</p>
+<pre><code class="lang-csharp">// Get the Team
+var team = await context.Team.GetAsync(o =&gt; o.Channels);
+
+// Get the channel
+var channel = team.Channels.AsRequested().FirstOrDefault(i =&gt; i.DisplayName == &quot;General&quot;);
+
+channel = await channel.GetAsync(o =&gt; o.Messages);
+var chatMessages = channel.Messages;
+
+// Get the chat message to add a reply to
+var chatMessageToAddReply = chatMessages.AsRequested().FirstOrDefault();
+
+var body = $&quot;&lt;div&gt;&lt;div&gt;&lt;h1&gt;Hello&lt;/h1&gt;&lt;p&gt;Example posting a message with inline image&lt;/p&gt;&lt;div&gt;&lt;span&gt;&lt;img height=\&quot;392\&quot; src=\&quot;../hostedContents/1/$value\&quot; width=\&quot;300\&quot; style=\&quot;vertical-align:bottom; width:300px; height:392px\&quot;&gt;&lt;/span&gt;&lt;/div&gt;&lt;/div&gt;&lt;/div&gt;&quot;;
+                                
+await chatMessageToAddReply.AddReplyAsync(new ChatMessageOptions
+{
+    Content = body,
+    ContentType = ChatMessageContentType.Html,
+    HostedContents =
+    {
+        new ChatMessageHostedContentOptions
+        {
+            Id = &quot;1&quot;,
+            ContentBytes = &quot;&lt;base64-encoded bytes&gt;&quot;,
+            ContentType = &quot;image/png&quot;
+        }
+    }
+});
+
+</code></pre>
+<h2 id="adding-chat-message-reply-with-mentions">Adding chat message reply with mentions</h2>
+<p>We can use mentions when creating a chat message reply. We can use the following options when mentioning:</p>
+<ul>
+<li>User</li>
+<li>Conversation (e.g. a team, a channel, ...)</li>
+<li>Team tag</li>
+</ul>
+<p>In this example, a team message will be posted which will tag a channel and a user:</p>
+<pre><code class="lang-csharp">// Get the Team
+var team = await context.Team.GetAsync(o =&gt; o.Channels);
+
+// Get the channel
+var channel = team.Channels.AsRequested().FirstOrDefault(i =&gt; i.DisplayName == &quot;General&quot;);
+
+channel = await channel.GetAsync(o =&gt; o.Messages);
+var chatMessages = channel.Messages;
+
+// Get the chat message to add a reply to
+var chatMessageToAddReply = chatMessages.AsRequested().FirstOrDefault();
+
+var body = $&quot;Hello, PnP Rocks! &lt;br/&gt;This is a channel and user mention test &lt;br/&gt;Mention 1: &lt;at id=\&quot;0\&quot;&gt;Channel&lt;/at&gt;&lt;br/&gt;Mention 2: &lt;at id=\&quot;1\&quot;&gt;User&lt;/a&gt;&quot;;
+
+await chatMessageToAddReply.AddReplyAsync(new ChatMessageOptions
+{
+    Content = body,
+    ContentType = ChatMessageContentType.Html,
+    Mentions =
+    {
+        new ChatMessageMentionOptions
+        {
+            Id = 0,
+            MentionText = &quot;Channel&quot;,
+            Mentioned = new TeamChatMessageMentionedIdentitySet
+            {
+                Conversation = new TeamConversationIdentity
+                {
+                    ConversationIdentityType = TeamConversationIdentityType.Channel,
+                    Id = channel.Id
+                }
+            }
+        },
+        new ChatMessageMentionOptions
+        {
+            Id = 1,
+            MentionText = &quot;User&quot;,
+            Mentioned = new TeamChatMessageMentionedIdentitySet
+            {
+                User = new Identity
+                {
+                    DisplayName = userToMention.Title,
+                    Id = graphUser.Id,
+                    UserIdentityType = TeamUserIdentityType.aadUser
+                }
+            }
+        }
+    }
+});
+
+</code></pre>
+<p>In this example, a reply will be created which will tag an entire team and a team tag. For more information regarding the usage of team tags in the PnP Core SDK, please refer to <a href="teams-tags.html">Team tags</a></p>
+<pre><code class="lang-csharp">
+// Get the Team
+var team = await context.Team.GetAsync(o =&gt; o.Channels, o =&gt; o.Tags);
+
+// Get the channel
+var channel = team.Channels.AsRequested().FirstOrDefault(i =&gt; i.DisplayName == &quot;General&quot;);
+
+channel = await channel.GetAsync(o =&gt; o.Messages);
+var chatMessages = channel.Messages;
+
+// Get the chat message to add a reply to
+var chatMessageToAddReply = chatMessages.AsRequested().FirstOrDefault();
+
+var body = $&quot;Hello, PnP Rocks! &lt;br/&gt;This is a team and tag mention test &lt;br/&gt;Mention 1: &lt;at id=\&quot;0\&quot;&gt;Team&lt;/at&gt;&lt;br/&gt;Mention 2: &lt;at id=\&quot;1\&quot;&gt;Tag&lt;/at&gt;&quot;;
+
+await chatMessageToAddReply.AddReplyAsync(new ChatMessageOptions
+{
+    Content = body,
+    ContentType = ChatMessageContentType.Html,
+    Mentions =
+    {
+        new ChatMessageMentionOptions
+        {
+            Id = 0,
+            MentionText = &quot;Team&quot;,
+            Mentioned = new TeamChatMessageMentionedIdentitySet
+            {
+                Conversation = new TeamConversationIdentity
+                {
+                    ConversationIdentityType = TeamConversationIdentityType.Team,
+                    Id = team.Id.ToString()
+                }
+            }
+        },
+        new ChatMessageMentionOptions
+        {
+            Id = 1,
+            MentionText = &quot;Tag&quot;,
+            Mentioned = new TeamChatMessageMentionedIdentitySet
+            {
+                Tag = new TeamTagIdentity
+                {
+                    DisplayName = team.Tag.First().DisplayName,
+                    Id = team.Tags.First().Id,
+                }
+            }
+        }
+    }
+});
+
+</code></pre>
+</article>
+          </div>
+          <div class="hidden-sm col-md-2" role="complementary">
+            <div class="sideaffix">
+              <nav class="bs-docs-sidebar hidden-print hidden-xs hidden-sm affix" id="affix">
+              </nav>
+            </div>
+          </div>        </div>
+      </div>
+      
+      <footer>
+        <div class="grad-bottom"></div>
+        <div class="footer">
+          <div class="container">
+            <span class="pull-right">
+              <a href="#top">Back to top</a>
+            </span>
+            <span>PnP Core SDK<br>Generated by <strong><a href='https://dotnet.github.io/docfx' alt='Doc FX Website'>DocFX</a></strong> with <strong><a href='https://ovasquez.github.io/docfx-material' alt='DocFx Material Theme'>Material UI</a></strong></span>
+            
+            <img src="https://telemetry.sharepointpnp.com/@pnp.github.io/index/" alt="spacer">
+          </div>
+        </div>
+      </footer>    </div>
+    
+    <script type="text/javascript" src="../styles/docfx.vendor.js"></script>
+    <script type="text/javascript" src="../styles/docfx.js"></script>
+    <script type="text/javascript" src="../styles/main.js"></script>    
+    <img src="https://m365-visitor-stats.azurewebsites.net/pnpcoresdk/docs">
+  </body>
+</html>

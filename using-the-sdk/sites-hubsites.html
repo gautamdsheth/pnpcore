@@ -8,7 +8,7 @@
     <title>Working with Hub Sites | PnP Core SDK </title>
     <meta name="viewport" content="width=device-width">
     <meta name="title" content="Working with Hub Sites | PnP Core SDK ">
-    <meta name="generator" content="docfx 2.56.5.0">
+    <meta name="generator" content="docfx 2.59.2.0">
     <meta name="description" content="The PnP Core SDK is a modern .NET SDK designed to work for Microsoft 365. It provides a unified object model for working with SharePoint Online and Teams which is agnostic to the underlying API's being called.">
     <link rel="shortcut icon" href="https://c.s-microsoft.com/favicon.ico?v2">
     <link rel="stylesheet" href="../styles/docfx.vendor.css">
@@ -78,7 +78,7 @@
           <div class="col-md-10">
             <article class="content wrap" id="_content" data-uid="">
                   <div class="contribution-panel mobile-hide pull-right">
-                      <a href="https://github.com/pnp/pnpcore/blob/dev/docs/using-the-sdk/sites-hubsites.md/#L1" title="Improve this Doc" class="improve-doc-lg"><i class="glyphicon glyphicon-pencil"></i></a>
+                      <a href="https://github.com/gautamdsheth/pnpcore/blob/dev/docs/using-the-sdk/sites-hubsites.md/#L1" title="Improve this Doc" class="improve-doc-lg"><i class="glyphicon glyphicon-pencil"></i></a>
                   </div>
                     <h1 id="working-with-hub-sites">Working with Hub Sites</h1>
 
@@ -115,9 +115,12 @@ if(!site.IsHubSite){
 </code></pre>
 <h2 id="join-a-hub-site">Join a hub site</h2>
 <p>This associates the site to an existing hub site, using this code to apply this to a site:</p>
-<div class="NOTE">
-<h5>Note</h5>
-<p>Ignore the section &quot;creating a context&quot;, this is included in the code below.</p>
+<div class="IMPORTANT">
+<h5>Important</h5>
+<ul>
+<li>Joining a hub site that lives in a geo location (so not the main location) require delegated permissions to work.</li>
+<li>If joining the hub site requires approval then this will fail, use the <code>GetSharePointAdmin().ConnectToHubSiteAsync</code> methods from the <a href="admin-sharepoint-tenant.html">Admin library</a> instead</li>
+</ul>
 </div>
 <pre><code class="lang-csharp">using (var contextPrimaryHub = await pnpContextFactory.CreateAsync(&quot;PrimaryHubSite&quot;))
 {
@@ -143,6 +146,10 @@ if(!site.IsHubSite){
 
 </code></pre>
 <h2 id="unjoin-a-hub-site">Unjoin a hub site</h2>
+<div class="IMPORTANT">
+<h5>Important</h5>
+<p>Unjoining a hub site that lives in a geo location (so not the main location) require delegated permissions to work.</p>
+</div>
 <p>This removes the association on the site to an existing hub site, using this code to apply this to a site:</p>
 <pre><code class="lang-csharp">
 ISite site = await context.Site.GetAsync(
@@ -155,6 +162,10 @@ if(assocSite.HubSiteId != Guid.Empty){
 
 </code></pre>
 <h2 id="unregister-a-hub-site">Unregister a hub site</h2>
+<div class="IMPORTANT">
+<h5>Important</h5>
+<p>Unregistering a hub site does require delegated permissions to work.</p>
+</div>
 <p>This unregisters a site as the primary hub site, using this code to apply this to a site:</p>
 <pre><code class="lang-csharp">
 ISite site = await context.Site.GetAsync(
@@ -164,7 +175,6 @@ ISite site = await context.Site.GetAsync(
 if(site.IsHubSite){
     var result = await site.UnregisterHubSiteAsync();
 }
-
 </code></pre>
 </article>
           </div>
@@ -192,5 +202,7 @@ if(site.IsHubSite){
     
     <script type="text/javascript" src="../styles/docfx.vendor.js"></script>
     <script type="text/javascript" src="../styles/docfx.js"></script>
-    <script type="text/javascript" src="../styles/main.js"></script>  </body>
+    <script type="text/javascript" src="../styles/main.js"></script>    
+    <img src="https://m365-visitor-stats.azurewebsites.net/pnpcoresdk/docs">
+  </body>
 </html>

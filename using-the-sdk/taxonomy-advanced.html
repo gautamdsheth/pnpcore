@@ -8,7 +8,7 @@
     <title>Working with taxonomy: advanced concepts | PnP Core SDK </title>
     <meta name="viewport" content="width=device-width">
     <meta name="title" content="Working with taxonomy: advanced concepts | PnP Core SDK ">
-    <meta name="generator" content="docfx 2.56.5.0">
+    <meta name="generator" content="docfx 2.59.2.0">
     <meta name="description" content="The PnP Core SDK is a modern .NET SDK designed to work for Microsoft 365. It provides a unified object model for working with SharePoint Online and Teams which is agnostic to the underlying API's being called.">
     <link rel="shortcut icon" href="https://c.s-microsoft.com/favicon.ico?v2">
     <link rel="stylesheet" href="../styles/docfx.vendor.css">
@@ -78,7 +78,7 @@
           <div class="col-md-10">
             <article class="content wrap" id="_content" data-uid="">
                   <div class="contribution-panel mobile-hide pull-right">
-                      <a href="https://github.com/pnp/pnpcore/blob/dev/docs/using-the-sdk/taxonomy-advanced.md/#L1" title="Improve this Doc" class="improve-doc-lg"><i class="glyphicon glyphicon-pencil"></i></a>
+                      <a href="https://github.com/gautamdsheth/pnpcore/blob/dev/docs/using-the-sdk/taxonomy-advanced.md/#L1" title="Improve this Doc" class="improve-doc-lg"><i class="glyphicon glyphicon-pencil"></i></a>
                   </div>
                     <h1 id="working-with-taxonomy-advanced-concepts">Working with taxonomy: advanced concepts</h1>
 
@@ -122,6 +122,14 @@ await termSet.UpdateAsync();
 </code></pre>
 <h2 id="working-with-term-properties">Working with term properties</h2>
 <p>Working with term properties is identical to working with term set properties.</p>
+<h2 id="getting-terms-based-upon-their-property-values">Getting terms based upon their property values</h2>
+<p>To get one or more terms based upon their properties you can use one of the <code>GetTermsByCustomProperty</code> methods specifying the property and property value to filter the terms on:</p>
+<pre><code class="lang-csharp">var terms = await termSet.GetTermsByCustomPropertyAsync(&quot;property2&quot;, &quot;value2&quot;);
+foreach(var term in terms)
+{
+    // do something with the terms
+}
+</code></pre>
 <h2 id="pinning-and-reusing-a-term">Pinning and reusing a term</h2>
 <p>Pinning a term makes linked copies of the term and its children available at the destination. The children of a pinned term can only be created or edited at the source and the changes will reflect everywhere the term is used. Reusing a term makes linked copies of the term and its children available at the destination. Children can be created for a reused term anywhere it is used but will exist only in the term set they were created.</p>
 <p>Both pinning a term or reusing a term comes down to adding a term relation of either type <code>TermRelationType.Pin</code> or <code>TermRelationType.Reuse</code>.</p>
@@ -157,5 +165,7 @@ await termA.Relations.AddAsync(TermRelationType.Reuse, termSetB);
     
     <script type="text/javascript" src="../styles/docfx.vendor.js"></script>
     <script type="text/javascript" src="../styles/docfx.js"></script>
-    <script type="text/javascript" src="../styles/main.js"></script>  </body>
+    <script type="text/javascript" src="../styles/main.js"></script>    
+    <img src="https://m365-visitor-stats.azurewebsites.net/pnpcoresdk/docs">
+  </body>
 </html>

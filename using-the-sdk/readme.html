@@ -8,7 +8,7 @@
     <title>Getting started with the PnP Core SDK | PnP Core SDK </title>
     <meta name="viewport" content="width=device-width">
     <meta name="title" content="Getting started with the PnP Core SDK | PnP Core SDK ">
-    <meta name="generator" content="docfx 2.56.5.0">
+    <meta name="generator" content="docfx 2.59.2.0">
     <meta name="description" content="The PnP Core SDK is a modern .NET SDK designed to work for Microsoft 365. It provides a unified object model for working with SharePoint Online and Teams which is agnostic to the underlying API's being called.">
     <link rel="shortcut icon" href="https://c.s-microsoft.com/favicon.ico?v2">
     <link rel="stylesheet" href="../styles/docfx.vendor.css">
@@ -78,7 +78,7 @@
           <div class="col-md-10">
             <article class="content wrap" id="_content" data-uid="">
                   <div class="contribution-panel mobile-hide pull-right">
-                      <a href="https://github.com/pnp/pnpcore/blob/dev/docs/using-the-sdk/readme.md/#L1" title="Improve this Doc" class="improve-doc-lg"><i class="glyphicon glyphicon-pencil"></i></a>
+                      <a href="https://github.com/gautamdsheth/pnpcore/blob/dev/docs/using-the-sdk/readme.md/#L1" title="Improve this Doc" class="improve-doc-lg"><i class="glyphicon glyphicon-pencil"></i></a>
                   </div>
                     <h1 id="getting-started-with-the-pnp-core-sdk">Getting started with the PnP Core SDK</h1>
 
@@ -90,6 +90,10 @@
 <li>Examples of how to use the PnP Core SDK in the <code>samples</code> folder</li>
 <li>The source of the documentation you are reading right now in the <code>docs</code> folder</li>
 </ul>
+<h2 id="i-dont-have-access-to-a-microsoft-365-tenant">I don't have access to a Microsoft 365 tenant</h2>
+<p>If you don't have a Microsoft 365 tenant you can, for developer purposes, always request <a href="https://developer.microsoft.com/en-us/microsoft-365/dev-program">a free developer tenant</a> and use that for developing and testing your applications. When your organization already uses Microsoft 365 it's still a good practice to develop and test your applications on a non production tenant, such as the <a href="https://developer.microsoft.com/en-us/microsoft-365/dev-program">free developer tenant</a>.</p>
+<h2 id="learning-from-live-code-via-polyglot-notebooks">Learning from live code via Polyglot notebooks</h2>
+<p>If you want to read about PnP Core SDK, see the needed code and even execute the code against your tenant then checkout our Polyglot notebooks! Using Visual Studio Code you interactively use PnP Core SDK with your tenant, the available notebooks can be found <a href="https://github.com/pnp/pnpcore/tree/dev/docs/polyglot#readme">here</a>.</p>
 <h2 id="referencing-the-pnp-core-sdk-in-your-project">Referencing the PnP Core SDK in your project</h2>
 <p>The recommended approach is to use the preview <a href="https://www.nuget.org/packages/PnP.Core">PnP.Core nuget package</a> together with the <a href="https://www.nuget.org/packages/PnP.Core.Auth">PnP.Core.Auth nuget package</a>. The former is the actual PnP Core SDK library, while the latter is an helper library that provides a useful set of Authentication Providers to authenticate against Azure Active Directory.
 Each night these preview packages are refreshed, so you can always upgrade to the latest dev bits by upgrading your nuget package to the latest version.</p>
@@ -304,6 +308,34 @@ Each night these preview packages are refreshed, so you can always upgrade to th
 <h5>Note</h5>
 <p>To learn more about how to setup authentication check the <a href="configuring%20authentication.html">Configuring authentication</a> article.</p>
 </div>
+<h2 id="advanced-configuration-of-pnpcontext-services">Advanced Configuration of PnPContext Services</h2>
+<p>For more fine grained control over the setup of the internally used <code>SharePointRestClient</code> and <code>MicrosoftGraphClient</code> used in <code>PnPContext</code>,
+there are optional actions to enable configuring the <code>IHttpClientBuilder</code> of each in the <code>AddPnPCore</code> extension method.</p>
+<pre><code class="lang-csharp">var host = Host.CreateDefaultBuilder()
+// Configure logging
+.ConfigureServices((hostingContext, services) =&gt;
+{
+    // Add the PnP Core SDK library services with additional delegating handler
+    services.AddPnPCore(sharePointRestClientBuilder =&gt;
+    {
+       sharePointRestBuilder.AddHttpMessageHandler&lt;CustomDelegatingHandler&gt;();
+    }, microsoftGraphBuilder =&gt;
+    {
+       microsoftGraphBuilder.AddHttpMessageHandler&lt;CustomDelegatingHandler&gt;();
+    });
+
+    // Add the PnP Core SDK library services configuration from the appsettings.json file
+    services.Configure&lt;PnPCoreOptions&gt;(hostingContext.Configuration.GetSection(&quot;PnPCore&quot;));
+    // Add the PnP Core SDK Authentication Providers
+    services.AddPnPCoreAuthentication();
+    // Add the PnP Core SDK Authentication Providers configuration from the appsettings.json file
+    services.Configure&lt;PnPCoreAuthenticationOptions&gt;(hostingContext.Configuration.GetSection(&quot;PnPCore&quot;));
+})
+// Let the builder know we're running in a console
+.UseConsoleLifetime()
+// Add services to the container
+.Build();
+</code></pre>
 <h2 id="obtaining-a-pnpcontext">Obtaining a PnPContext</h2>
 <p>The <code>PnPContext</code> is the entry point for using the PnP Core SDK, you can create a <code>PnPContext</code> from either a SharePoint site URL or the id of a Microsoft 365 group.</p>
 <div class="NOTE">
@@ -506,5 +538,7 @@ var list = await web.Lists.GetByTitleAsync(&quot;Documents&quot;,
     
     <script type="text/javascript" src="../styles/docfx.vendor.js"></script>
     <script type="text/javascript" src="../styles/docfx.js"></script>
-    <script type="text/javascript" src="../styles/main.js"></script>  </body>
+    <script type="text/javascript" src="../styles/main.js"></script>    
+    <img src="https://m365-visitor-stats.azurewebsites.net/pnpcoresdk/docs">
+  </body>
 </html>

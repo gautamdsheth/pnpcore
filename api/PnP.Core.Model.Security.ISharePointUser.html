@@ -10,7 +10,7 @@
     <meta name="viewport" content="width=device-width">
     <meta name="title" content="Interface ISharePointUser
    | PnP Core SDK ">
-    <meta name="generator" content="docfx 2.56.5.0">
+    <meta name="generator" content="docfx 2.59.2.0">
     <meta name="description" content="The PnP Core SDK is a modern .NET SDK designed to work for Microsoft 365. It provides a unified object model for working with SharePoint Online and Teams which is agnostic to the underlying API's being called.">
     <link rel="shortcut icon" href="https://c.s-microsoft.com/favicon.ico?v2">
     <link rel="stylesheet" href="../styles/docfx.vendor.css">
@@ -80,8 +80,8 @@
           <div class="col-md-10">
             <article class="content wrap" id="_content" data-uid="PnP.Core.Model.Security.ISharePointUser">
                   <div class="contribution-panel mobile-hide pull-right">
-                      <a href="https://github.com/pnp/pnpcore/blob/dev/src/sdk/PnP.Core/Model/Security/Public/ISharePointUser.cs/#L8" title="View Source" class="view-source-lg"><i class="fa fa-code"></i></a>
-                      <a href="https://github.com/pnp/pnpcore/new/dev/apiSpec/new?filename=PnP_Core_Model_Security_ISharePointUser.md&amp;value=---%0Auid%3A%20PnP.Core.Model.Security.ISharePointUser%0Asummary%3A%20'*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax'%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A" title="Improve this Doc" class="improve-doc-lg"><i class="glyphicon glyphicon-pencil"></i></a>
+                      <a href="https://github.com/gautamdsheth/pnpcore/blob/dev/src/sdk/PnP.Core/Model/Security/Public/ISharePointUser.cs/#L8" title="View Source" class="view-source-lg"><i class="fa fa-code"></i></a>
+                      <a href="https://github.com/gautamdsheth/pnpcore/new/dev/apiSpec/new?filename=PnP_Core_Model_Security_ISharePointUser.md&amp;value=---%0Auid%3A%20PnP.Core.Model.Security.ISharePointUser%0Asummary%3A%20'*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax'%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A" title="Improve this Doc" class="improve-doc-lg"><i class="glyphicon glyphicon-pencil"></i></a>
                   </div>
                       <h1 id="PnP_Core_Model_Security_ISharePointUser" data-uid="PnP.Core.Model.Security.ISharePointUser">Interface ISharePointUser
   </h1>
@@ -151,6 +151,24 @@
       <a class="xref" href="PnP.Core.Model.IDataModelLoad-1.html#PnP_Core_Model_IDataModelLoad_1_LoadAsync_Expression_Func__0_System_Object_____">IDataModelLoad&lt;ISharePointUser&gt;.LoadAsync(Expression&lt;Func&lt;ISharePointUser, Object&gt;&gt;[])</a>
     </div>
     <div>
+      <a class="xref" href="PnP.Core.Model.IDataModelDelete.html#PnP_Core_Model_IDataModelDelete_DeleteBatchAsync">IDataModelDelete.DeleteBatchAsync()</a>
+    </div>
+    <div>
+      <a class="xref" href="PnP.Core.Model.IDataModelDelete.html#PnP_Core_Model_IDataModelDelete_DeleteBatchAsync_PnP_Core_Services_Batch_">IDataModelDelete.DeleteBatchAsync(Batch)</a>
+    </div>
+    <div>
+      <a class="xref" href="PnP.Core.Model.IDataModelDelete.html#PnP_Core_Model_IDataModelDelete_DeleteAsync">IDataModelDelete.DeleteAsync()</a>
+    </div>
+    <div>
+      <a class="xref" href="PnP.Core.Model.IDataModelDelete.html#PnP_Core_Model_IDataModelDelete_DeleteBatch">IDataModelDelete.DeleteBatch()</a>
+    </div>
+    <div>
+      <a class="xref" href="PnP.Core.Model.IDataModelDelete.html#PnP_Core_Model_IDataModelDelete_DeleteBatch_PnP_Core_Services_Batch_">IDataModelDelete.DeleteBatch(Batch)</a>
+    </div>
+    <div>
+      <a class="xref" href="PnP.Core.Model.IDataModelDelete.html#PnP_Core_Model_IDataModelDelete_Delete">IDataModelDelete.Delete()</a>
+    </div>
+    <div>
       <a class="xref" href="PnP.Core.Model.Security.ISharePointPrincipal.html#PnP_Core_Model_Security_ISharePointPrincipal_Id">ISharePointPrincipal.Id</a>
     </div>
     <div>
@@ -172,7 +190,7 @@
   
   <h5 id="PnP_Core_Model_Security_ISharePointUser_syntax">Syntax</h5>
   <div class="codewrapper">
-    <pre><code class="lang-csharp hljs">public interface ISharePointUser : IDataModel&lt;ISharePointUser&gt;, IDataModelParent, IDataModelWithContext, ISupportModules&lt;ISharePointUser&gt;, IDataModelGet&lt;ISharePointUser&gt;, IDataModelLoad&lt;ISharePointUser&gt;, ISharePointPrincipal, IQueryableDataModel</code></pre>
+    <pre><code class="lang-csharp hljs">public interface ISharePointUser : IDataModel&lt;ISharePointUser&gt;, IDataModelParent, IDataModelWithContext, ISupportModules&lt;ISharePointUser&gt;, IDataModelGet&lt;ISharePointUser&gt;, IDataModelLoad&lt;ISharePointUser&gt;, IDataModelDelete, ISharePointPrincipal, IQueryableDataModel</code></pre>
   </div>
 
   
@@ -184,10 +202,10 @@
   
   <span class="small pull-right mobile-hide">
     <span class="divider"> </span>
-    <a href="https://github.com/pnp/pnpcore/new/dev/apiSpec/new?filename=PnP_Core_Model_Security_ISharePointUser_AadObjectId.md&amp;value=---%0Auid%3A%20PnP.Core.Model.Security.ISharePointUser.AadObjectId%0Asummary%3A%20'*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax'%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A" title="Improve this Doc"><i class="fa fa-pencil"></i></a>
+    <a href="https://github.com/gautamdsheth/pnpcore/new/dev/apiSpec/new?filename=PnP_Core_Model_Security_ISharePointUser_AadObjectId.md&amp;value=---%0Auid%3A%20PnP.Core.Model.Security.ISharePointUser.AadObjectId%0Asummary%3A%20'*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax'%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A" title="Improve this Doc"><i class="fa fa-pencil"></i></a>
   </span>
   <span class="small pull-right mobile-hide">
-    <a href="https://github.com/pnp/pnpcore/blob/dev/src/sdk/PnP.Core/Model/Security/Public/ISharePointUser.cs/#L14" title="View Source"><i class="fa fa-code"></i></a>
+    <a href="https://github.com/gautamdsheth/pnpcore/blob/dev/src/sdk/PnP.Core/Model/Security/Public/ISharePointUser.cs/#L14" title="View Source"><i class="fa fa-code"></i></a>
   </span>
   
   <a id="PnP_Core_Model_Security_ISharePointUser_AadObjectId_" data-uid="PnP.Core.Model.Security.ISharePointUser.AadObjectId*"></a>
@@ -212,7 +230,7 @@
   <table>
     <tr>
       <td>
-        <a class="xref" href="https://docs.microsoft.com/dotnet/api/system.string">String</a>
+        <span class="xref">System.String</span>
         <p>
       </td>
     </tr>
@@ -228,10 +246,10 @@
   
   <span class="small pull-right mobile-hide">
     <span class="divider"> </span>
-    <a href="https://github.com/pnp/pnpcore/new/dev/apiSpec/new?filename=PnP_Core_Model_Security_ISharePointUser_All.md&amp;value=---%0Auid%3A%20PnP.Core.Model.Security.ISharePointUser.All%0Asummary%3A%20'*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax'%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A" title="Improve this Doc"><i class="fa fa-pencil"></i></a>
+    <a href="https://github.com/gautamdsheth/pnpcore/new/dev/apiSpec/new?filename=PnP_Core_Model_Security_ISharePointUser_All.md&amp;value=---%0Auid%3A%20PnP.Core.Model.Security.ISharePointUser.All%0Asummary%3A%20'*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax'%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A" title="Improve this Doc"><i class="fa fa-pencil"></i></a>
   </span>
   <span class="small pull-right mobile-hide">
-    <a href="https://github.com/pnp/pnpcore/blob/dev/src/sdk/PnP.Core/Model/Security/Public/ISharePointUser.cs/#L57" title="View Source"><i class="fa fa-code"></i></a>
+    <a href="https://github.com/gautamdsheth/pnpcore/blob/dev/src/sdk/PnP.Core/Model/Security/Public/ISharePointUser.cs/#L62" title="View Source"><i class="fa fa-code"></i></a>
   </span>
   
   <a id="PnP_Core_Model_Security_ISharePointUser_All_" data-uid="PnP.Core.Model.Security.ISharePointUser.All*"></a>
@@ -256,7 +274,7 @@
   <table>
     <tr>
       <td>
-        <a class="xref" href="https://docs.microsoft.com/dotnet/api/system.object">Object</a>
+        <span class="xref">System.Object</span>
         <p>
       </td>
     </tr>
@@ -272,10 +290,10 @@
   
   <span class="small pull-right mobile-hide">
     <span class="divider"> </span>
-    <a href="https://github.com/pnp/pnpcore/new/dev/apiSpec/new?filename=PnP_Core_Model_Security_ISharePointUser_Department.md&amp;value=---%0Auid%3A%20PnP.Core.Model.Security.ISharePointUser.Department%0Asummary%3A%20'*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax'%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A" title="Improve this Doc"><i class="fa fa-pencil"></i></a>
+    <a href="https://github.com/gautamdsheth/pnpcore/new/dev/apiSpec/new?filename=PnP_Core_Model_Security_ISharePointUser_Department.md&amp;value=---%0Auid%3A%20PnP.Core.Model.Security.ISharePointUser.Department%0Asummary%3A%20'*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax'%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A" title="Improve this Doc"><i class="fa fa-pencil"></i></a>
   </span>
   <span class="small pull-right mobile-hide">
-    <a href="https://github.com/pnp/pnpcore/blob/dev/src/sdk/PnP.Core/Model/Security/Public/ISharePointUser.cs/#L30" title="View Source"><i class="fa fa-code"></i></a>
+    <a href="https://github.com/gautamdsheth/pnpcore/blob/dev/src/sdk/PnP.Core/Model/Security/Public/ISharePointUser.cs/#L30" title="View Source"><i class="fa fa-code"></i></a>
   </span>
   
   <a id="PnP_Core_Model_Security_ISharePointUser_Department_" data-uid="PnP.Core.Model.Security.ISharePointUser.Department*"></a>
@@ -300,7 +318,7 @@
   <table>
     <tr>
       <td>
-        <a class="xref" href="https://docs.microsoft.com/dotnet/api/system.string">String</a>
+        <span class="xref">System.String</span>
         <p>
       </td>
     </tr>
@@ -316,10 +334,10 @@
   
   <span class="small pull-right mobile-hide">
     <span class="divider"> </span>
-    <a href="https://github.com/pnp/pnpcore/new/dev/apiSpec/new?filename=PnP_Core_Model_Security_ISharePointUser_Expiration.md&amp;value=---%0Auid%3A%20PnP.Core.Model.Security.ISharePointUser.Expiration%0Asummary%3A%20'*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax'%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A" title="Improve this Doc"><i class="fa fa-pencil"></i></a>
+    <a href="https://github.com/gautamdsheth/pnpcore/new/dev/apiSpec/new?filename=PnP_Core_Model_Security_ISharePointUser_Expiration.md&amp;value=---%0Auid%3A%20PnP.Core.Model.Security.ISharePointUser.Expiration%0Asummary%3A%20'*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax'%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A" title="Improve this Doc"><i class="fa fa-pencil"></i></a>
   </span>
   <span class="small pull-right mobile-hide">
-    <a href="https://github.com/pnp/pnpcore/blob/dev/src/sdk/PnP.Core/Model/Security/Public/ISharePointUser.cs/#L37" title="View Source"><i class="fa fa-code"></i></a>
+    <a href="https://github.com/gautamdsheth/pnpcore/blob/dev/src/sdk/PnP.Core/Model/Security/Public/ISharePointUser.cs/#L37" title="View Source"><i class="fa fa-code"></i></a>
   </span>
   
   <a id="PnP_Core_Model_Security_ISharePointUser_Expiration_" data-uid="PnP.Core.Model.Security.ISharePointUser.Expiration*"></a>
@@ -346,7 +364,7 @@ A null value indicates no expiry.</p>
   <table>
     <tr>
       <td>
-        <a class="xref" href="https://docs.microsoft.com/dotnet/api/system.string">String</a>
+        <span class="xref">System.String</span>
         <p>
       </td>
     </tr>
@@ -362,10 +380,54 @@ A null value indicates no expiry.</p>
   
   <span class="small pull-right mobile-hide">
     <span class="divider"> </span>
-    <a href="https://github.com/pnp/pnpcore/new/dev/apiSpec/new?filename=PnP_Core_Model_Security_ISharePointUser_IsEmailAuthenticationGuestUser.md&amp;value=---%0Auid%3A%20PnP.Core.Model.Security.ISharePointUser.IsEmailAuthenticationGuestUser%0Asummary%3A%20'*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax'%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A" title="Improve this Doc"><i class="fa fa-pencil"></i></a>
+    <a href="https://github.com/gautamdsheth/pnpcore/new/dev/apiSpec/new?filename=PnP_Core_Model_Security_ISharePointUser_Groups.md&amp;value=---%0Auid%3A%20PnP.Core.Model.Security.ISharePointUser.Groups%0Asummary%3A%20'*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax'%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A" title="Improve this Doc"><i class="fa fa-pencil"></i></a>
   </span>
   <span class="small pull-right mobile-hide">
-    <a href="https://github.com/pnp/pnpcore/blob/dev/src/sdk/PnP.Core/Model/Security/Public/ISharePointUser.cs/#L42" title="View Source"><i class="fa fa-code"></i></a>
+    <a href="https://github.com/gautamdsheth/pnpcore/blob/dev/src/sdk/PnP.Core/Model/Security/Public/ISharePointUser.cs/#L57" title="View Source"><i class="fa fa-code"></i></a>
+  </span>
+  
+  <a id="PnP_Core_Model_Security_ISharePointUser_Groups_" data-uid="PnP.Core.Model.Security.ISharePointUser.Groups*"></a>
+  
+  <h4 id="PnP_Core_Model_Security_ISharePointUser_Groups" data-uid="PnP.Core.Model.Security.ISharePointUser.Groups"><a href="#collapsible-PnP_Core_Model_Security_ISharePointUser_Groups" class="expander" data-toggle="collapse">Groups</a></h4>
+  
+  <div id="collapsible-PnP_Core_Model_Security_ISharePointUser_Groups" class="collapse in">
+  <div class="markdown level1 summary"><p>Returns the collection of <a class="xref" href="PnP.Core.Model.Security.ISharePointGroup.html">ISharePointGroup</a> for this user</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">ISharePointGroupCollection Groups { get; }</code></pre>
+  </div>
+
+  
+  
+  
+  
+  <h5 class="propertyValue">Property Value</h5>
+  <table>
+    <tr>
+      <td>
+        <a class="xref" href="PnP.Core.Model.Security.ISharePointGroupCollection.html">ISharePointGroupCollection</a>
+        <p>
+      </td>
+    </tr>
+  </table>
+  
+  
+  
+  
+  
+  
+  
+  </div>
+  
+  <span class="small pull-right mobile-hide">
+    <span class="divider"> </span>
+    <a href="https://github.com/gautamdsheth/pnpcore/new/dev/apiSpec/new?filename=PnP_Core_Model_Security_ISharePointUser_IsEmailAuthenticationGuestUser.md&amp;value=---%0Auid%3A%20PnP.Core.Model.Security.ISharePointUser.IsEmailAuthenticationGuestUser%0Asummary%3A%20'*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax'%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A" title="Improve this Doc"><i class="fa fa-pencil"></i></a>
+  </span>
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/gautamdsheth/pnpcore/blob/dev/src/sdk/PnP.Core/Model/Security/Public/ISharePointUser.cs/#L42" title="View Source"><i class="fa fa-code"></i></a>
   </span>
   
   <a id="PnP_Core_Model_Security_ISharePointUser_IsEmailAuthenticationGuestUser_" data-uid="PnP.Core.Model.Security.ISharePointUser.IsEmailAuthenticationGuestUser*"></a>
@@ -390,7 +452,7 @@ A null value indicates no expiry.</p>
   <table>
     <tr>
       <td>
-        <a class="xref" href="https://docs.microsoft.com/dotnet/api/system.boolean">Boolean</a>
+        <span class="xref">System.Boolean</span>
         <p>
       </td>
     </tr>
@@ -406,10 +468,10 @@ A null value indicates no expiry.</p>
   
   <span class="small pull-right mobile-hide">
     <span class="divider"> </span>
-    <a href="https://github.com/pnp/pnpcore/new/dev/apiSpec/new?filename=PnP_Core_Model_Security_ISharePointUser_IsShareByEmailGuestUser.md&amp;value=---%0Auid%3A%20PnP.Core.Model.Security.ISharePointUser.IsShareByEmailGuestUser%0Asummary%3A%20'*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax'%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A" title="Improve this Doc"><i class="fa fa-pencil"></i></a>
+    <a href="https://github.com/gautamdsheth/pnpcore/new/dev/apiSpec/new?filename=PnP_Core_Model_Security_ISharePointUser_IsShareByEmailGuestUser.md&amp;value=---%0Auid%3A%20PnP.Core.Model.Security.ISharePointUser.IsShareByEmailGuestUser%0Asummary%3A%20'*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax'%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A" title="Improve this Doc"><i class="fa fa-pencil"></i></a>
   </span>
   <span class="small pull-right mobile-hide">
-    <a href="https://github.com/pnp/pnpcore/blob/dev/src/sdk/PnP.Core/Model/Security/Public/ISharePointUser.cs/#L47" title="View Source"><i class="fa fa-code"></i></a>
+    <a href="https://github.com/gautamdsheth/pnpcore/blob/dev/src/sdk/PnP.Core/Model/Security/Public/ISharePointUser.cs/#L47" title="View Source"><i class="fa fa-code"></i></a>
   </span>
   
   <a id="PnP_Core_Model_Security_ISharePointUser_IsShareByEmailGuestUser_" data-uid="PnP.Core.Model.Security.ISharePointUser.IsShareByEmailGuestUser*"></a>
@@ -434,7 +496,7 @@ A null value indicates no expiry.</p>
   <table>
     <tr>
       <td>
-        <a class="xref" href="https://docs.microsoft.com/dotnet/api/system.boolean">Boolean</a>
+        <span class="xref">System.Boolean</span>
         <p>
       </td>
     </tr>
@@ -450,10 +512,10 @@ A null value indicates no expiry.</p>
   
   <span class="small pull-right mobile-hide">
     <span class="divider"> </span>
-    <a href="https://github.com/pnp/pnpcore/new/dev/apiSpec/new?filename=PnP_Core_Model_Security_ISharePointUser_IsSiteAdmin.md&amp;value=---%0Auid%3A%20PnP.Core.Model.Security.ISharePointUser.IsSiteAdmin%0Asummary%3A%20'*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax'%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A" title="Improve this Doc"><i class="fa fa-pencil"></i></a>
+    <a href="https://github.com/gautamdsheth/pnpcore/new/dev/apiSpec/new?filename=PnP_Core_Model_Security_ISharePointUser_IsSiteAdmin.md&amp;value=---%0Auid%3A%20PnP.Core.Model.Security.ISharePointUser.IsSiteAdmin%0Asummary%3A%20'*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax'%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A" title="Improve this Doc"><i class="fa fa-pencil"></i></a>
   </span>
   <span class="small pull-right mobile-hide">
-    <a href="https://github.com/pnp/pnpcore/blob/dev/src/sdk/PnP.Core/Model/Security/Public/ISharePointUser.cs/#L52" title="View Source"><i class="fa fa-code"></i></a>
+    <a href="https://github.com/gautamdsheth/pnpcore/blob/dev/src/sdk/PnP.Core/Model/Security/Public/ISharePointUser.cs/#L52" title="View Source"><i class="fa fa-code"></i></a>
   </span>
   
   <a id="PnP_Core_Model_Security_ISharePointUser_IsSiteAdmin_" data-uid="PnP.Core.Model.Security.ISharePointUser.IsSiteAdmin*"></a>
@@ -478,7 +540,7 @@ A null value indicates no expiry.</p>
   <table>
     <tr>
       <td>
-        <a class="xref" href="https://docs.microsoft.com/dotnet/api/system.boolean">Boolean</a>
+        <span class="xref">System.Boolean</span>
         <p>
       </td>
     </tr>
@@ -494,10 +556,10 @@ A null value indicates no expiry.</p>
   
   <span class="small pull-right mobile-hide">
     <span class="divider"> </span>
-    <a href="https://github.com/pnp/pnpcore/new/dev/apiSpec/new?filename=PnP_Core_Model_Security_ISharePointUser_Mail.md&amp;value=---%0Auid%3A%20PnP.Core.Model.Security.ISharePointUser.Mail%0Asummary%3A%20'*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax'%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A" title="Improve this Doc"><i class="fa fa-pencil"></i></a>
+    <a href="https://github.com/gautamdsheth/pnpcore/new/dev/apiSpec/new?filename=PnP_Core_Model_Security_ISharePointUser_Mail.md&amp;value=---%0Auid%3A%20PnP.Core.Model.Security.ISharePointUser.Mail%0Asummary%3A%20'*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax'%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A" title="Improve this Doc"><i class="fa fa-pencil"></i></a>
   </span>
   <span class="small pull-right mobile-hide">
-    <a href="https://github.com/pnp/pnpcore/blob/dev/src/sdk/PnP.Core/Model/Security/Public/ISharePointUser.cs/#L25" title="View Source"><i class="fa fa-code"></i></a>
+    <a href="https://github.com/gautamdsheth/pnpcore/blob/dev/src/sdk/PnP.Core/Model/Security/Public/ISharePointUser.cs/#L25" title="View Source"><i class="fa fa-code"></i></a>
   </span>
   
   <a id="PnP_Core_Model_Security_ISharePointUser_Mail_" data-uid="PnP.Core.Model.Security.ISharePointUser.Mail*"></a>
@@ -523,7 +585,7 @@ SP REST property name: Email</p>
   <table>
     <tr>
       <td>
-        <a class="xref" href="https://docs.microsoft.com/dotnet/api/system.string">String</a>
+        <span class="xref">System.String</span>
         <p>
       </td>
     </tr>
@@ -539,10 +601,10 @@ SP REST property name: Email</p>
   
   <span class="small pull-right mobile-hide">
     <span class="divider"> </span>
-    <a href="https://github.com/pnp/pnpcore/new/dev/apiSpec/new?filename=PnP_Core_Model_Security_ISharePointUser_UserPrincipalName.md&amp;value=---%0Auid%3A%20PnP.Core.Model.Security.ISharePointUser.UserPrincipalName%0Asummary%3A%20'*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax'%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A" title="Improve this Doc"><i class="fa fa-pencil"></i></a>
+    <a href="https://github.com/gautamdsheth/pnpcore/new/dev/apiSpec/new?filename=PnP_Core_Model_Security_ISharePointUser_UserPrincipalName.md&amp;value=---%0Auid%3A%20PnP.Core.Model.Security.ISharePointUser.UserPrincipalName%0Asummary%3A%20'*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax'%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A" title="Improve this Doc"><i class="fa fa-pencil"></i></a>
   </span>
   <span class="small pull-right mobile-hide">
-    <a href="https://github.com/pnp/pnpcore/blob/dev/src/sdk/PnP.Core/Model/Security/Public/ISharePointUser.cs/#L19" title="View Source"><i class="fa fa-code"></i></a>
+    <a href="https://github.com/gautamdsheth/pnpcore/blob/dev/src/sdk/PnP.Core/Model/Security/Public/ISharePointUser.cs/#L19" title="View Source"><i class="fa fa-code"></i></a>
   </span>
   
   <a id="PnP_Core_Model_Security_ISharePointUser_UserPrincipalName_" data-uid="PnP.Core.Model.Security.ISharePointUser.UserPrincipalName*"></a>
@@ -567,7 +629,7 @@ SP REST property name: Email</p>
   <table>
     <tr>
       <td>
-        <a class="xref" href="https://docs.microsoft.com/dotnet/api/system.string">String</a>
+        <span class="xref">System.String</span>
         <p>
       </td>
     </tr>
@@ -585,10 +647,118 @@ SP REST property name: Email</p>
   
   <span class="small pull-right mobile-hide">
     <span class="divider"> </span>
-    <a href="https://github.com/pnp/pnpcore/new/dev/apiSpec/new?filename=PnP_Core_Model_Security_ISharePointUser_AsGraphUser.md&amp;value=---%0Auid%3A%20PnP.Core.Model.Security.ISharePointUser.AsGraphUser%0Asummary%3A%20'*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax'%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A" title="Improve this Doc"><i class="fa fa-pencil"></i></a>
+    <a href="https://github.com/gautamdsheth/pnpcore/new/dev/apiSpec/new?filename=PnP_Core_Model_Security_ISharePointUser_AddRoleDefinitions_System_String___.md&amp;value=---%0Auid%3A%20PnP.Core.Model.Security.ISharePointUser.AddRoleDefinitions(System.String%5B%5D)%0Asummary%3A%20'*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax'%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A" title="Improve this Doc"><i class="fa fa-pencil"></i></a>
   </span>
   <span class="small pull-right mobile-hide">
-    <a href="https://github.com/pnp/pnpcore/blob/dev/src/sdk/PnP.Core/Model/Security/Public/ISharePointUser.cs/#L69" title="View Source"><i class="fa fa-code"></i></a>
+    <a href="https://github.com/gautamdsheth/pnpcore/blob/dev/src/sdk/PnP.Core/Model/Security/Public/ISharePointUser.cs/#L91" title="View Source"><i class="fa fa-code"></i></a>
+  </span>
+  
+  <a id="PnP_Core_Model_Security_ISharePointUser_AddRoleDefinitions_" data-uid="PnP.Core.Model.Security.ISharePointUser.AddRoleDefinitions*"></a>
+  
+  <h4 id="PnP_Core_Model_Security_ISharePointUser_AddRoleDefinitions_System_String___" data-uid="PnP.Core.Model.Security.ISharePointUser.AddRoleDefinitions(System.String[])"><a href="#collapsible-PnP_Core_Model_Security_ISharePointUser_AddRoleDefinitions_System_String___" class="expander" data-toggle="collapse">AddRoleDefinitions(String[])</a></h4>
+  
+  <div id="collapsible-PnP_Core_Model_Security_ISharePointUser_AddRoleDefinitions_System_String___" class="collapse in">
+  <div class="markdown level1 summary"><p>Adds role definitions for this user</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">bool AddRoleDefinitions(params string[] names)</code></pre>
+  </div>
+
+  <h5 class="parameters">Parameters</h5>
+  <table>
+    <tr>
+      <td>
+        <span class="pull-right"><span class="xref">System.String</span>[]</span>
+        <span class="parametername">names</span>
+        <p>
+      </td>
+    </tr>
+  </table>
+  
+  <h5 class="returns">Returns</h5>
+  <table>
+    <tr>
+      <td>
+        <span class="xref">System.Boolean</span>
+        <p>
+      </td>
+    </tr>
+  </table>
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  </div>
+  
+  <span class="small pull-right mobile-hide">
+    <span class="divider"> </span>
+    <a href="https://github.com/gautamdsheth/pnpcore/new/dev/apiSpec/new?filename=PnP_Core_Model_Security_ISharePointUser_AddRoleDefinitionsAsync_System_String___.md&amp;value=---%0Auid%3A%20PnP.Core.Model.Security.ISharePointUser.AddRoleDefinitionsAsync(System.String%5B%5D)%0Asummary%3A%20'*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax'%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A" title="Improve this Doc"><i class="fa fa-pencil"></i></a>
+  </span>
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/gautamdsheth/pnpcore/blob/dev/src/sdk/PnP.Core/Model/Security/Public/ISharePointUser.cs/#L98" title="View Source"><i class="fa fa-code"></i></a>
+  </span>
+  
+  <a id="PnP_Core_Model_Security_ISharePointUser_AddRoleDefinitionsAsync_" data-uid="PnP.Core.Model.Security.ISharePointUser.AddRoleDefinitionsAsync*"></a>
+  
+  <h4 id="PnP_Core_Model_Security_ISharePointUser_AddRoleDefinitionsAsync_System_String___" data-uid="PnP.Core.Model.Security.ISharePointUser.AddRoleDefinitionsAsync(System.String[])"><a href="#collapsible-PnP_Core_Model_Security_ISharePointUser_AddRoleDefinitionsAsync_System_String___" class="expander" data-toggle="collapse">AddRoleDefinitionsAsync(String[])</a></h4>
+  
+  <div id="collapsible-PnP_Core_Model_Security_ISharePointUser_AddRoleDefinitionsAsync_System_String___" class="collapse in">
+  <div class="markdown level1 summary"><p>Adds role definitions for this user</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">Task&lt;bool&gt; AddRoleDefinitionsAsync(params string[] names)</code></pre>
+  </div>
+
+  <h5 class="parameters">Parameters</h5>
+  <table>
+    <tr>
+      <td>
+        <span class="pull-right"><span class="xref">System.String</span>[]</span>
+        <span class="parametername">names</span>
+        <p>
+      </td>
+    </tr>
+  </table>
+  
+  <h5 class="returns">Returns</h5>
+  <table>
+    <tr>
+      <td>
+        <span class="xref">Task</span>&lt;<span class="xref">System.Boolean</span>&gt;
+        <p>
+      </td>
+    </tr>
+  </table>
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  </div>
+  
+  <span class="small pull-right mobile-hide">
+    <span class="divider"> </span>
+    <a href="https://github.com/gautamdsheth/pnpcore/new/dev/apiSpec/new?filename=PnP_Core_Model_Security_ISharePointUser_AsGraphUser.md&amp;value=---%0Auid%3A%20PnP.Core.Model.Security.ISharePointUser.AsGraphUser%0Asummary%3A%20'*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax'%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A" title="Improve this Doc"><i class="fa fa-pencil"></i></a>
+  </span>
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/gautamdsheth/pnpcore/blob/dev/src/sdk/PnP.Core/Model/Security/Public/ISharePointUser.cs/#L74" title="View Source"><i class="fa fa-code"></i></a>
   </span>
   
   <a id="PnP_Core_Model_Security_ISharePointUser_AsGraphUser_" data-uid="PnP.Core.Model.Security.ISharePointUser.AsGraphUser*"></a>
@@ -629,10 +799,10 @@ SP REST property name: Email</p>
   
   <span class="small pull-right mobile-hide">
     <span class="divider"> </span>
-    <a href="https://github.com/pnp/pnpcore/new/dev/apiSpec/new?filename=PnP_Core_Model_Security_ISharePointUser_AsGraphUserAsync.md&amp;value=---%0Auid%3A%20PnP.Core.Model.Security.ISharePointUser.AsGraphUserAsync%0Asummary%3A%20'*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax'%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A" title="Improve this Doc"><i class="fa fa-pencil"></i></a>
+    <a href="https://github.com/gautamdsheth/pnpcore/new/dev/apiSpec/new?filename=PnP_Core_Model_Security_ISharePointUser_AsGraphUserAsync.md&amp;value=---%0Auid%3A%20PnP.Core.Model.Security.ISharePointUser.AsGraphUserAsync%0Asummary%3A%20'*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax'%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A" title="Improve this Doc"><i class="fa fa-pencil"></i></a>
   </span>
   <span class="small pull-right mobile-hide">
-    <a href="https://github.com/pnp/pnpcore/blob/dev/src/sdk/PnP.Core/Model/Security/Public/ISharePointUser.cs/#L63" title="View Source"><i class="fa fa-code"></i></a>
+    <a href="https://github.com/gautamdsheth/pnpcore/blob/dev/src/sdk/PnP.Core/Model/Security/Public/ISharePointUser.cs/#L68" title="View Source"><i class="fa fa-code"></i></a>
   </span>
   
   <a id="PnP_Core_Model_Security_ISharePointUser_AsGraphUserAsync_" data-uid="PnP.Core.Model.Security.ISharePointUser.AsGraphUserAsync*"></a>
@@ -655,6 +825,202 @@ SP REST property name: Email</p>
     <tr>
       <td>
         <span class="xref">Task</span>&lt;<a class="xref" href="PnP.Core.Model.Security.IGraphUser.html">IGraphUser</a>&gt;
+        <p>
+      </td>
+    </tr>
+  </table>
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  </div>
+  
+  <span class="small pull-right mobile-hide">
+    <span class="divider"> </span>
+    <a href="https://github.com/gautamdsheth/pnpcore/new/dev/apiSpec/new?filename=PnP_Core_Model_Security_ISharePointUser_GetRoleDefinitions.md&amp;value=---%0Auid%3A%20PnP.Core.Model.Security.ISharePointUser.GetRoleDefinitions%0Asummary%3A%20'*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax'%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A" title="Improve this Doc"><i class="fa fa-pencil"></i></a>
+  </span>
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/gautamdsheth/pnpcore/blob/dev/src/sdk/PnP.Core/Model/Security/Public/ISharePointUser.cs/#L79" title="View Source"><i class="fa fa-code"></i></a>
+  </span>
+  
+  <a id="PnP_Core_Model_Security_ISharePointUser_GetRoleDefinitions_" data-uid="PnP.Core.Model.Security.ISharePointUser.GetRoleDefinitions*"></a>
+  
+  <h4 id="PnP_Core_Model_Security_ISharePointUser_GetRoleDefinitions" data-uid="PnP.Core.Model.Security.ISharePointUser.GetRoleDefinitions"><a href="#collapsible-PnP_Core_Model_Security_ISharePointUser_GetRoleDefinitions" class="expander" data-toggle="collapse">GetRoleDefinitions()</a></h4>
+  
+  <div id="collapsible-PnP_Core_Model_Security_ISharePointUser_GetRoleDefinitions" class="collapse in">
+  <div class="markdown level1 summary"><p>Retrieves the role definitions for this user</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">IRoleDefinitionCollection GetRoleDefinitions()</code></pre>
+  </div>
+
+  
+  <h5 class="returns">Returns</h5>
+  <table>
+    <tr>
+      <td>
+        <a class="xref" href="PnP.Core.Model.Security.IRoleDefinitionCollection.html">IRoleDefinitionCollection</a>
+        <p>
+      </td>
+    </tr>
+  </table>
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  </div>
+  
+  <span class="small pull-right mobile-hide">
+    <span class="divider"> </span>
+    <a href="https://github.com/gautamdsheth/pnpcore/new/dev/apiSpec/new?filename=PnP_Core_Model_Security_ISharePointUser_GetRoleDefinitionsAsync.md&amp;value=---%0Auid%3A%20PnP.Core.Model.Security.ISharePointUser.GetRoleDefinitionsAsync%0Asummary%3A%20'*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax'%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A" title="Improve this Doc"><i class="fa fa-pencil"></i></a>
+  </span>
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/gautamdsheth/pnpcore/blob/dev/src/sdk/PnP.Core/Model/Security/Public/ISharePointUser.cs/#L84" title="View Source"><i class="fa fa-code"></i></a>
+  </span>
+  
+  <a id="PnP_Core_Model_Security_ISharePointUser_GetRoleDefinitionsAsync_" data-uid="PnP.Core.Model.Security.ISharePointUser.GetRoleDefinitionsAsync*"></a>
+  
+  <h4 id="PnP_Core_Model_Security_ISharePointUser_GetRoleDefinitionsAsync" data-uid="PnP.Core.Model.Security.ISharePointUser.GetRoleDefinitionsAsync"><a href="#collapsible-PnP_Core_Model_Security_ISharePointUser_GetRoleDefinitionsAsync" class="expander" data-toggle="collapse">GetRoleDefinitionsAsync()</a></h4>
+  
+  <div id="collapsible-PnP_Core_Model_Security_ISharePointUser_GetRoleDefinitionsAsync" class="collapse in">
+  <div class="markdown level1 summary"><p>Retrieves the role definitions for this user</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">Task&lt;IRoleDefinitionCollection&gt; GetRoleDefinitionsAsync()</code></pre>
+  </div>
+
+  
+  <h5 class="returns">Returns</h5>
+  <table>
+    <tr>
+      <td>
+        <span class="xref">Task</span>&lt;<a class="xref" href="PnP.Core.Model.Security.IRoleDefinitionCollection.html">IRoleDefinitionCollection</a>&gt;
+        <p>
+      </td>
+    </tr>
+  </table>
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  </div>
+  
+  <span class="small pull-right mobile-hide">
+    <span class="divider"> </span>
+    <a href="https://github.com/gautamdsheth/pnpcore/new/dev/apiSpec/new?filename=PnP_Core_Model_Security_ISharePointUser_RemoveRoleDefinitions_System_String___.md&amp;value=---%0Auid%3A%20PnP.Core.Model.Security.ISharePointUser.RemoveRoleDefinitions(System.String%5B%5D)%0Asummary%3A%20'*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax'%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A" title="Improve this Doc"><i class="fa fa-pencil"></i></a>
+  </span>
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/gautamdsheth/pnpcore/blob/dev/src/sdk/PnP.Core/Model/Security/Public/ISharePointUser.cs/#L105" title="View Source"><i class="fa fa-code"></i></a>
+  </span>
+  
+  <a id="PnP_Core_Model_Security_ISharePointUser_RemoveRoleDefinitions_" data-uid="PnP.Core.Model.Security.ISharePointUser.RemoveRoleDefinitions*"></a>
+  
+  <h4 id="PnP_Core_Model_Security_ISharePointUser_RemoveRoleDefinitions_System_String___" data-uid="PnP.Core.Model.Security.ISharePointUser.RemoveRoleDefinitions(System.String[])"><a href="#collapsible-PnP_Core_Model_Security_ISharePointUser_RemoveRoleDefinitions_System_String___" class="expander" data-toggle="collapse">RemoveRoleDefinitions(String[])</a></h4>
+  
+  <div id="collapsible-PnP_Core_Model_Security_ISharePointUser_RemoveRoleDefinitions_System_String___" class="collapse in">
+  <div class="markdown level1 summary"><p>Removes role definitions for this user</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">bool RemoveRoleDefinitions(params string[] names)</code></pre>
+  </div>
+
+  <h5 class="parameters">Parameters</h5>
+  <table>
+    <tr>
+      <td>
+        <span class="pull-right"><span class="xref">System.String</span>[]</span>
+        <span class="parametername">names</span>
+        <p>
+      </td>
+    </tr>
+  </table>
+  
+  <h5 class="returns">Returns</h5>
+  <table>
+    <tr>
+      <td>
+        <span class="xref">System.Boolean</span>
+        <p>
+      </td>
+    </tr>
+  </table>
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  </div>
+  
+  <span class="small pull-right mobile-hide">
+    <span class="divider"> </span>
+    <a href="https://github.com/gautamdsheth/pnpcore/new/dev/apiSpec/new?filename=PnP_Core_Model_Security_ISharePointUser_RemoveRoleDefinitionsAsync_System_String___.md&amp;value=---%0Auid%3A%20PnP.Core.Model.Security.ISharePointUser.RemoveRoleDefinitionsAsync(System.String%5B%5D)%0Asummary%3A%20'*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax'%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A" title="Improve this Doc"><i class="fa fa-pencil"></i></a>
+  </span>
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/gautamdsheth/pnpcore/blob/dev/src/sdk/PnP.Core/Model/Security/Public/ISharePointUser.cs/#L112" title="View Source"><i class="fa fa-code"></i></a>
+  </span>
+  
+  <a id="PnP_Core_Model_Security_ISharePointUser_RemoveRoleDefinitionsAsync_" data-uid="PnP.Core.Model.Security.ISharePointUser.RemoveRoleDefinitionsAsync*"></a>
+  
+  <h4 id="PnP_Core_Model_Security_ISharePointUser_RemoveRoleDefinitionsAsync_System_String___" data-uid="PnP.Core.Model.Security.ISharePointUser.RemoveRoleDefinitionsAsync(System.String[])"><a href="#collapsible-PnP_Core_Model_Security_ISharePointUser_RemoveRoleDefinitionsAsync_System_String___" class="expander" data-toggle="collapse">RemoveRoleDefinitionsAsync(String[])</a></h4>
+  
+  <div id="collapsible-PnP_Core_Model_Security_ISharePointUser_RemoveRoleDefinitionsAsync_System_String___" class="collapse in">
+  <div class="markdown level1 summary"><p>Removes role definitions for this user</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">Task&lt;bool&gt; RemoveRoleDefinitionsAsync(params string[] names)</code></pre>
+  </div>
+
+  <h5 class="parameters">Parameters</h5>
+  <table>
+    <tr>
+      <td>
+        <span class="pull-right"><span class="xref">System.String</span>[]</span>
+        <span class="parametername">names</span>
+        <p>
+      </td>
+    </tr>
+  </table>
+  
+  <h5 class="returns">Returns</h5>
+  <table>
+    <tr>
+      <td>
+        <span class="xref">Task</span>&lt;<span class="xref">System.Boolean</span>&gt;
         <p>
       </td>
     </tr>
@@ -708,6 +1074,9 @@ SP REST property name: Email</p>
   <div>
       <a class="xref" href="PnP.Core.Model.RequestModuleExtensions.html#PnP_Core_Model_RequestModuleExtensions_WithHeaders__1_PnP_Core_Model_ISupportModules___0__Dictionary_System_String_System_String__Action_Dictionary_System_String_System_String___">RequestModuleExtensions.WithHeaders&lt;TModel&gt;(ISupportModules&lt;TModel&gt;, Dictionary&lt;String, String&gt;, Action&lt;Dictionary&lt;String, String&gt;&gt;)</a>
   </div>
+  <div>
+      <a class="xref" href="PnP.Core.Model.RequestModuleExtensions.html#PnP_Core_Model_RequestModuleExtensions_WithResponseHeaders__1_PnP_Core_Model_ISupportModules___0__Action_Dictionary_System_String_System_String___">RequestModuleExtensions.WithResponseHeaders&lt;TModel&gt;(ISupportModules&lt;TModel&gt;, Action&lt;Dictionary&lt;String, String&gt;&gt;)</a>
+  </div>
   
 </article>
           </div>
@@ -735,5 +1104,7 @@ SP REST property name: Email</p>
     
     <script type="text/javascript" src="../styles/docfx.vendor.js"></script>
     <script type="text/javascript" src="../styles/docfx.js"></script>
-    <script type="text/javascript" src="../styles/main.js"></script>  </body>
+    <script type="text/javascript" src="../styles/main.js"></script>    
+    <img src="https://m365-visitor-stats.azurewebsites.net/pnpcoresdk/docs">
+  </body>
 </html>
